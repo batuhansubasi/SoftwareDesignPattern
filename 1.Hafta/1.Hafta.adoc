@@ -1,0 +1,135 @@
+==== _1.Madde_
+
+= Yazılım Tasarım Kalıpları
+
+== Batuhan Subaşı - 160202091
+
+=== 1.Hafta
+
+{nbsp} + 
+
+==== _2.Madde_
+
+=== Linux Nedir ve Özellikleri Nelerdir?
+
+Linux, Unix türevi, ücretsiz, açık kaynak kodlu işletim sistemi olarak bilinmektedir.
+
+Linux’u şu şekilde anlatabiliriz:
+
+* Ücretsiz
+* Unix gibi
+* Açık Kaynak
+* Ağ işletim Sistemi
+
+==== LİNUX KOMUTLARI
+
+. mkdir & rmdir
+. touch
+. man & -help
+. cp
+. mv
+. nano & vi
+. sudo
+
+{nbsp} +
+
+==== _3.Madde_
+
+TIP: Lütfen derslere çalışmaya özen gösterelim.
+
+IMPORTANT: Dersin devamsızlık hakkı 5'dir.
+
+WARNING: Ödevi zamanında teslim ediniz.
+
+{nbsp} +
+
+==== _4.Madde_
+
+===== External
+
+https://github.com/batuhansubasi[Batuhan Subaşı @ *GitHub*]
+
+==== _5.Madde_
+
+.Manzara Resmi
+
+image::https://d33wubrfki0l68.cloudfront.net/dbfc383d23401ccbed7262a1822dba9babecb949/69a10/images/sunset.jpg[Batuhan Subasi]
+
+
+==== _6.Madde_
+
+video::LI9FEQyopSg[youtube]
+
+==== _7.Madde_
+
+[source,c++]
+
+----
+
+
+#include <iostream>
+using namespace std;
+
+int main() 
+{
+	int sayi, sonuc;
+
+    cout<<"Bir adet sayi giriniz:";
+    cin>>sayi;
+    
+	if(sayi)
+		sonuc = sayi % 9 == 0 ? 9 : sayi % 9 ;
+	else 
+		sonuc = 0;
+
+	cout<<"Sonuc: "<<sonuc;
+
+	return 0;
+}
+
+----
+
+==== _8.Madde_
+
+====
+
+.myscripst.sh
+[source,ruby]
+----
+#!/bin/bash
+# Basit bir Bash Script
+# Umut 10/05/2016
+echo İşte sizin Ev klasörünüzdeki dosyalar:
+ls ~
+chmod +x myscript.sh
+ls -l myscript.sh
+-rwxr-xr-x 1 umut umut 112 May 10 21:12 myscript.sh
+----
+
+====
+
+==== _9.Madde_
+
+.Öğrenci Bilgileri
+|===
+|Ad | Soyad |Yaşadığı Yer
+
+|Batuhan
+|Subaşı
+|İstanbul
+
+|Aslıhan
+|Subaşı
+|Mersin
+
+|Ceylin
+|Kara
+|Kocaeli
+
+|===
+
+==== _10.Madde_
+
+See <<paragraphs>> to learn how to write paragraphs.
+
+Learn how to organize the document into <<section-titles,sections>>.
