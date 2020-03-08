@@ -120,4 +120,4 @@ Total number of arguments is 2
 
 ***
 
-En başa dönmek için => <<1.Madde>>
+Linux yazıma dönmek için => <<Linux Nedir ve Özellikleri Nelerdir?>>
