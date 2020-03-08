@@ -1,1 +1,5 @@
-Deneme
+= Yazılım Tasarım Kalıpları
+
+== Batuhan Subaşı - 160202091
+
+=== 1.Hafta - Tamamlandı √
