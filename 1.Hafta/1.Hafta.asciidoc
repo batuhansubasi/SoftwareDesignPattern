@@ -1,14 +1,8 @@
-==== _1.Madde_
+==== Yazılım Tasarım Kalıpları 
 
-= Yazılım Tasarım Kalıpları
+===== Batuhan Subaşı - 160202091
 
-== Batuhan Subaşı - 160202091
-
-=== 1.Hafta
-
-{nbsp} + 
-
-==== _2.Madde_
+***
 
 === Linux Nedir ve Özellikleri Nelerdir?
 
@@ -31,9 +25,7 @@ Linux’u şu şekilde anlatabiliriz:
 . nano & vi
 . sudo
 
-{nbsp} +
-
-==== _3.Madde_
+***
 
 TIP: Lütfen derslere çalışmaya özen gösterelim.
 
@@ -41,26 +33,31 @@ IMPORTANT: Dersin devamsızlık hakkı 5'dir.
 
 WARNING: Ödevi zamanında teslim ediniz.
 
-{nbsp} +
-
-==== _4.Madde_
+***
 
 ===== External
 
 https://github.com/batuhansubasi[Batuhan Subaşı @ *GitHub*]
 
-==== _5.Madde_
+===== With spaces and special characters
+
+link:https://example.org/?q=%5Ba%20b%5D[Özel karakter kullanarak]
+
+===== Windows path
+
+link:\\C:\Users\bsubasi\Documents\GitHub\SoftwareDesignPattern\1.Hafta[Windows Path kullanarak]
+
+***
 
 .Manzara Resmi
 
 image::https://d33wubrfki0l68.cloudfront.net/dbfc383d23401ccbed7262a1822dba9babecb949/69a10/images/sunset.jpg[Batuhan Subasi]
 
+***
 
-==== _6.Madde_
+video::73jTWOhrpLc[youtube]
 
-video::LI9FEQyopSg[youtube]
-
-==== _7.Madde_
+***
 
 [source,c++]
 
@@ -72,45 +69,37 @@ using namespace std;
 
 int main() 
 {
-	int sayi, sonuc;
-
-    cout<<"Bir adet sayi giriniz:";
-    cin>>sayi;
-    
-	if(sayi)
-		sonuc = sayi % 9 == 0 ? 9 : sayi % 9 ;
-	else 
-		sonuc = 0;
-
-	cout<<"Sonuc: "<<sonuc;
-
-	return 0;
+   setlocale(LC_ALL,"Turkish"); //Türkçe karakter
+   int s1,s2,toplam;
+   cout<<"1. Sayıyı Girin : ";
+   cin>>s1;
+   cout<<"2. Sayıyı : ";
+   cin>>s2;
+   toplam=s1+s2;
+   cout<<"Sayıların Toplamı : "<<toplam;
 }
 
 ----
 
-==== _8.Madde_
+***
 
 ====
 
 .myscripst.sh
 [source,ruby]
 ----
-#!/bin/bash
-# Basit bir Bash Script
-# Umut 10/05/2016
-echo İşte sizin Ev klasörünüzdeki dosyalar:
-ls ~
-chmod +x myscript.sh
-ls -l myscript.sh
--rwxr-xr-x 1 umut umut 112 May 10 21:12 myscript.sh
+$ chmod a+x name.sh
+$ ./name.sh Hans-Wolfgang Loidl
+My first name is Hans-Wolfgang
+My surname is Loidl
+Total number of arguments is 2
 ----
 
 ====
 
-==== _9.Madde_
+***
 
-.Öğrenci Bilgileri
+.Kişisel Bilgiler
 |===
 |Ad | Soyad |Yaşadığı Yer
 
@@ -128,8 +117,7 @@ ls -l myscript.sh
 
 |===
 
-==== _10.Madde_
 
-See <<paragraphs>> to learn how to write paragraphs.
+***
 
-Learn how to organize the document into <<section-titles,sections>>.
+En başa dönmek için => <<1.Madde>>
