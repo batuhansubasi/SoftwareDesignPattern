@@ -45,13 +45,16 @@ link:https://example.org/?q=%5Ba%20b%5D[Özel karakter kullanarak]
 
 ===== Windows path
 
-link:\\C:\Users\bsubasi\Documents\GitHub\SoftwareDesignPattern\1.Hafta[Windows Path kullanarak]
+link:++\\sample.pdf[Windows Path kullanarak]
 
 ***
 
-.Manzara Resmi
+.Manzara Resmi (Linkten Gelen)
 
-image::https://d33wubrfki0l68.cloudfront.net/dbfc383d23401ccbed7262a1822dba9babecb949/69a10/images/sunset.jpg[Batuhan Subasi]
+image::https://d33wubrfki0l68.cloudfront.net/dbfc383d23401ccbed7262a1822dba9babecb949/69a10/images/sunset.jpg[Link]
+
+.Manzara Resmi (Windows path' ten Gelen)
+image::sunset.jpg[Windows Path]
 
 ***
 
