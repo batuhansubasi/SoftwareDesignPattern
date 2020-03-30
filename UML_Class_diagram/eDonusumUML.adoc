@@ -67,7 +67,7 @@ enum Goruntuleme{
 PortaleArsiv..|>eArsiv
 ERPeArsiv..|>eArsiv
 
-eArsiv-->eDonusumUrunleri : <<DersiAlır>>
+eArsiv-->eDonusumUrunleri : <<SertifikaOnay>>
 
 eFatura"1" *-- "*"EntegratorFirma
 
