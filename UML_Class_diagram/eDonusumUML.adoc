@@ -1,0 +1,88 @@
+.e-Dönüşüm Ürünleri UML Diagramı
+[uml,file="umlSinif.png"]
+--
+@startuml
+left to right direction
+
+enum SenaryoTipi{
+	TemelSenaryo
+	TicariSenaryo
+}
+
+enum TicariTipi{
+    Kabul
+    Red
+}
+
+interface Bilgiler{
+    String vergileriAl()
+    String odemeBilgileriniAl()
+    boolean 7GunKontrolEt()
+    int kalemBilgileriniAl()
+}
+
+Class eArsiv{
+  -İmza Bilgisi
+  +musteriye Mail At()
+}
+
+Class PortaleArsiv {
+    -Portal Kullanım Belgesi
+    +ManuelBilgiGir
+}
+
+Class ERPeArsiv{
+    -ERP Kullanım Belgesi
+    +OtomatikBilgiGetir
+}
+
+Class eDonusumUrunleri{
+    -eFatura
+    -eArsiv
+    +GIB'e bildir()
+    +Mali Müsavir Paylas()
+    #ERP Programına At()
+}
+
+Class eFatura{
+  -Mükelleflik Bilgisi
+  -VKN
+  -Posta Kutusu
+  +Faturayi Arsivle()
+}
+
+Class EntegratorFirma{
+ -Entegratorluk Bilgisi
+ +Bulut Tabanlı Depola()
+ +Veriyi Analiz Et()
+}
+
+enum Goruntuleme{
+    XSLT
+    Adobe Form
+    XML
+}
+
+
+PortaleArsiv..|>eArsiv
+ERPeArsiv..|>eArsiv
+
+eArsiv-->eDonusumUrunleri : <<DersiAlır>>
+
+eFatura"1" *-- "*"EntegratorFirma
+
+eDonusumUrunleri"1" *-- "*"eFatura
+
+eDonusumUrunleri - SenaryoTipi
+
+Bilgiler --o eDonusumUrunleri
+
+TicariTipi .. SenaryoTipi
+
+EntegratorFirma ^-- Goruntuleme
+
+TicariTipi ..> eArsiv
+
+@enduml
+--  
+

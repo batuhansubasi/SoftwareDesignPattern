@@ -6,4 +6,8 @@
 
 Wiki, projects, issues sekmeleri aktif olarak kullanıldı.
 
-=== 2.Hafta - Devam edecek ∞
+=== 2.Hafta - Tamamlandı √
+
+UML Diyagramı ascidocc formatında görsel görüntüsü ile beraber eklendi.
+
+=== 3.Hafta - Devam edecek ∞
