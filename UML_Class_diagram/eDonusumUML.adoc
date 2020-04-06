@@ -1,88 +1,105 @@
-.e-Dönüşüm Ürünleri UML Diagramı
-[uml,file="umlSinif.png"]
+.eFatura Sistemi
+[uml,file="umleFatura.png"]
 --
 @startuml
+
 left to right direction
 
-enum SenaryoTipi{
-	TemelSenaryo
-	TicariSenaryo
-}
-
-enum TicariTipi{
-    Kabul
-    Red
-}
-
-interface Bilgiler{
-    String vergileriAl()
-    String odemeBilgileriniAl()
-    boolean 7GunKontrolEt()
-    int kalemBilgileriniAl()
-}
-
-Class eArsiv{
-  -İmza Bilgisi
-  +musteriye Mail At()
-}
-
-Class PortaleArsiv {
-    -Portal Kullanım Belgesi
-    +ManuelBilgiGir
-}
-
-Class ERPeArsiv{
-    -ERP Kullanım Belgesi
-    +OtomatikBilgiGetir
-}
-
-Class eDonusumUrunleri{
-    -eFatura
-    -eArsiv
-    +GIB'e bildir()
-    +Mali Müsavir Paylas()
-    #ERP Programına At()
-}
-
 Class eFatura{
-  -Mükelleflik Bilgisi
-  -VKN
-  -Posta Kutusu
-  +Faturayi Arsivle()
+    -tarih: date
+    -siparisnumara: id
+    +VergiHesapla()
+    +ToplamTutarHesapla()
+    -SiparisAnalizi()
+    #AgirlikHesapla()
 }
 
-Class EntegratorFirma{
- -Entegratorluk Bilgisi
- +Bulut Tabanlı Depola()
- +Veriyi Analiz Et()
+class Alici{
+-isim: String
+-adres: string
++siparisVer(Uye)()
 }
 
-enum Goruntuleme{
-    XSLT
-    Adobe Form
-    XML
+class Partner{
+email: String
+password: Hash
 }
 
+class Bayi{
+-VKN: int
+}
 
-PortaleArsiv..|>eArsiv
-ERPeArsiv..|>eArsiv
+class Bireysel{
+-TCKN: int
+}
 
-eArsiv-->eDonusumUrunleri : <<SertifikaOnay>>
+interface Gonderim{
+-malimuhur: string
++getMaliMuhur()
+}
 
-eFatura"1" *-- "*"EntegratorFirma
+class ERPdenGonder{
++token: string
++ setMalimuhur()
+}
 
-eDonusumUrunleri"1" *-- "*"eFatura
+class WebdenGonder{
++token: string
++ setMalimuhur()
++ yetkilendirme(token)
+}
 
-eDonusumUrunleri - SenaryoTipi
+class MobildenGonder{
++token: string
++ setMalimuhur()
++ yetkilendirme(token)
+}
 
-Bilgiler --o eDonusumUrunleri
+class TutarBilgileri{
+-miktar: int
+-not: string
+-vergi: string
++VergiHesapla()
+}
 
-TicariTipi .. SenaryoTipi
+class Kalem{
+-aciklama: String
+-miktar: int
+-agirlik: float
+-tutar: int
++VergiyiAl()
+}
 
-EntegratorFirma ^-- Goruntuleme
+class BankaBilgileri{
++subeadi: string
++iban: int
++Gonder()
+}
 
-TicariTipi ..> eArsiv
+eFatura"1" *-- "1"BankaBilgileri
+
+eFatura"1" - "1"Alici
+
+eFatura"1" o-- "1"TutarBilgileri
+
+TutarBilgileri"0..*" --> "1*"Kalem
+
+Bayi ..|> Alici
+
+Bireysel ..|> Alici
+
+Gonderim"1" - "1"eFatura
+
+Gonderim ^-- ERPdenGonder
+
+Gonderim ^-- WebdenGonder
+
+Gonderim ^-- MobildenGonder
+
+Alici ..> Partner
 
 @enduml
 --  
+
+
 
