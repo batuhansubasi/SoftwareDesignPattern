@@ -1,0 +1,73 @@
+== Thread Safe Singleton - Java Dili
+
+[source,java]
+----
+// MySingleton.java <1>
+public class MySingleton { <1> 
+
+    private static Mysingleton innerInstance = null; <2>
+
+    private MySingleton(){ <3>
+
+    }
+
+    public static synchronized MySingleton getInstance(){ <6>
+
+    if(innerInstance == null){ <4>
+        innerInstance = new Singleton();
+    }
+        return innerInstance; <5>
+    }
+
+}
+
+----
+
+<1> Büyük çaplı operasyonları tek bir sefer yürütmek için kullanılır, birden fazla kez yapılması engellenmesi için. Aynı zamanda süreci merkezleme için kullanılır. *MySingleton* isminde sınıfımızı olusturduk.
+<2> Statik instance olusturuyoruz; çünkü sınıfımızdaki instance nesnesi, sınıfın creation eventinden etkilenmemesi için. Statik kaynakta tutuyoruz. Başlangıç değeri olarak null veriyoruz ki, bundan sonrakilerde instance yaratılmış mı kontrolü için.
+<3> Dışarıdan erişimi kapatmak için private constructor olusturuyoruz, dışarıdan çağırmak isteyen statik instance metodu ile çağırabilir. *Lazy Inıtıalization*
+<4> Eger instance boşsa singleton objesi inşa et. İlk başlangıçta null olacağı için oluşmak zorunda.
+<5> Eğer boş değilse, aynı instance yollanır.
+<6> synchronized eklendi, çünkü 2 tane thread işlem yapmak istediğinde biri yaratır, diğeri değiştirir vs. Böylece degisiklige kapanıyor.
+
+=== Ornek
+
+[source,java]
+----
+
+// Fatura.java
+public class Fatura {
+
+   private static Fatura instance = new Fatura(); <1>
+
+   private Fatura(){} <2>
+
+   public static Fatura getInstance(){
+      return instance; <3>
+   }
+
+   public void write(){
+      System.out.println("Hello World!");
+   }
+}
+
+----
+<1> Fatura sınıfından nesne yaratildi.
+<2> Private constructor olusturuyoruz.
+<3> Olusmus olan nesneyi geri döndürüyoruz
+
+[source,java]
+----
+
+// Demo.java
+public class Demo {
+   public static void main(String[] args) {
+
+      Fatura fatura = Fatura.getInstance(); <1>
+
+      fatura.write();
+   }
+}
+
+----
+<1> Halihazırdaki faturayı getir, constructorlu şekilde yeni nesneye izin yok!

@@ -1,0 +1,213 @@
+== Factory Pattern - Java Dili
+
+==== Kendi secmis oldugum proje uml' i referans alındı.
+
+[source,java]
+----
+// Gonderim.java <1>
+public class Gonderim { <2>
+    public void malimuhur(){
+        System.out.println("Malimuhur imzalandı.");
+    }
+    
+    public void VKNyazdir(Bayi bayi){ <3>
+    public int vkn = bayi.getVKNlist(); <4>
+    System.out.println("VKN:" + vkn);
+    }
+}
+----
+
+<1> *Gonderim* sınıfı olusturuldu.
+<2> *ERPdenGonder* ve *WebdenGonder* sınıflarıyla beraber *Representation/Generalization/Inheritance* ilişkisi kullanıldı. 
+<3> *Bayi* sınıfıyla beraber *Dependency* ilişkisi kullanıldı. *Bayi* classından *bayi* isminde nesne türetildi.
+<4> *Bayi* sınıfındaki *getVKNlist* metodu çağrıldı.
+
+***
+
+[source,java]
+----
+// ERPdenGonder.java <1>
+public class ERPdenGonder extends Gonderim { <2>
+    @Override
+    public void ERPimzala() {
+        System.out.println("Ekstradan imzalama yapildi, kalıtım konusu.");
+    }
+}
+----
+
+<1> *ERPdenGonder* classi olusturuldu.
+<2> *Gonderim* sınıfından kalıtım yapıldı.
+
+***
+
+[source,java]
+----
+// WebdenGonder.java <1>
+public class WebdenGonder extends Gonderim { <2>
+    @Override
+    public void Webimzala() {
+        System.out.println("Portal web üzerinden imzala, kalıtım konusu.");
+    }
+}
+----
+
+<1> *Webimzala* classi olusturuldu.
+<2> *Gonderim* sınıfından kalıtım yapıldı.
+
+***
+
+[source,java]
+----
+// Bayi.java <1>
+public class Bayi {
+    private int vkn;
+
+    public int getVKNlist() {
+        try {
+            File file=new File("VKNlistesi.txt"); <2>
+            vkn = new MimetypesFileTypeMap().getContentType(file); <3>
+        } catch (Exception e) {
+            System.out.println("Dosyaya erişilemedi.");
+        }
+        return vkn; <4>
+    }
+}
+----
+
+<1> *Bayi* classi olusturuldu.
+<2>  VKN dosyası okundu.
+<3>  int tipindeki VKN değişkenine değer atandı.
+<4>  Deger geri döndürüldü.
+
+***
+
+[source,java]
+----
+// Alıcı.java <1>
+public interface Alıcı { <2>
+public boolean uyeKontrol();
+}
+----
+
+<1> *Alıcı* interface'i olusturuldu.
+<2> *UyeKontrol* metodu icin *Partner/Partnership* classlarından değer dönecek. 
+*Realization* ilişkisi kullanıldı. 
+2 farklı classtan aynı metot farklı amaçlar için kullanıldı.
+
+***
+
+[source,java]
+----
+// Partner.java <1>
+public class Partner implements Alıcı { <2>
+    String kullaniciadi = "Partner";
+    String sifre = "password";
+    public boolean uyeKontrol(){
+        if (kullaniciadi.isEquals("Partner")) return true; <3>
+        return false;
+    }
+}
+----
+
+<1> *Partner* sınıfı oluşturuldu.
+<2> *Alıcı* interface'i implemente edildi.
+<3> Kullanıcı adı partner ise "doğru" değeri, değilse "false" değeri döndürüldü.
+
+***
+
+[source,java]
+----
+// Partnership.java <1>
+public class Partnership implements Alıcı { <2>
+    String kullaniciadi = "Partner";
+    String sifre = "password";
+    public boolean uyeKontrol(){
+        if (kullaniciadi.isEquals("Partnership")) return true; <3>
+        return false;
+    }
+}
+----
+
+<1> *Partnership* sınıfı oluşturuldu.
+<2> *Alıcı* interface'i implemente edildi.
+<3> Kullanıcı adı partnership ise "doğru" değeri, değilse "false" değeri döndürüldü.
+
+***
+
+[source,java]
+----
+// Main.java <1>
+public class Main {
+    public static void main(String[] args) {
+                
+    }
+}
+----
+
+<1> *Main* isminde sınıf oluşturuldu. *Association* ilişkisi kullanıldı.
+
+***
+
+[source,java]
+----
+// TutarBilgileri.java <1>
+public class TutarBilgileri {
+    String not;
+    int vergitoplam;
+    
+    TutarBilgileri(String not, int vergitoplam) <2>
+    {
+        this.not = not;
+        this.vergitoplam = vergitoplam;
+    }
+    
+    public String getNot(){ <3>
+    return not;
+    }
+    
+    public int getVergiToplam(){
+    return vergitoplam;
+    }
+}
+----
+
+<1> *Tutar Bilgileri* sınıfı oluşturuldu.
+<2> Constructor oluşturuldu.
+<3> Getter and setter metotları oluşturuldu.
+
+***
+
+[source,java]
+----
+// eFatura.java <1>
+public class eFatura {
+
+    TutarBilgileri tutar; <2>
+    public void tutarBilgileriniGoster(){
+    System.out.println("Vergitoplam:" + tutar.getVergiToplam()); <3>
+    }
+    
+    private BankaBilgileri bankabilgileri; <4>
+    Fatura(Bankabilgileri bankbil) <4>
+    {
+        bankabilgileri = bankbil; <4>
+    }
+}
+----
+
+<1> *eFatura* classı oluşturuldu.
+<2> *Tutarbilgileri* classından referans oluşturuldu.
+<3> Getter metoduyla vergitoplam bilgisi çağrıldı. *Aggregation* ilişkisi kuruldu.
+<4> *Bankabilgileri* classından obje türetildi. 2 sınıf arasında *Composition* ilişkisi kuruldu.
+
+- Composition: Başka bir sınıf içeren bir sınıfın, sınıf dahil edilmeden işlevsel olarak var olmayacak şekilde ona bağımlı olduğu zaman tanımlanabilir.
+
+***
+
+[source,java]
+----
+// BankaBilgileri.java
+public class BankaBilgileri {
+
+}
+----

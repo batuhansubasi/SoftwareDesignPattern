@@ -1,0 +1,23 @@
+.Singleton Pattern
+[uml,file="umlSinif.png"]
+--
+@startuml
+left to right direction
+
+Class Fatura{
+    -instance: Fatura
+    -Fatura()
+    +getInstance()
+    +write()
+}
+
+Class Demo{
+  +main()
+}
+
+Demo-->Fatura : NesneIstenir
+Fatura-->Demo : GeriDondurur
+
+@enduml
+--  
+

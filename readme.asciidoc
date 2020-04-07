@@ -10,4 +10,9 @@ Wiki, projects, issues sekmeleri aktif olarak kullanıldı.
 
 UML Diyagramı ascidocc formatında görsel görüntüsü ile beraber eklendi.
 
-=== 3.Hafta - Devam edecek ∞
+=== 3.Hafta - Tamamlandı √
+
+Singleton Pattern ve Factory Pattern yaklaşımları 2 ayrı klasör ile eklendi.
+Klasör İçeriği: UML Görüntüsü, UML Kodu, Pattern Kodu.
+
+=== 4.Hafta - Devam edecek ∞

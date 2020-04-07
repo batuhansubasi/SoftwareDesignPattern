@@ -1,0 +1,100 @@
+.eFatura Sistemi
+[uml,file="umleFatura.png"]
+--
+@startuml
+
+left to right direction
+
+Class eFatura{
+    -tarih: date
+    -siparisnumara: id
+    +VergiHesapla()
+    +ToplamTutarHesapla()
+    -SiparisAnalizi()
+}
+
+interface Alici{
+-isim: String
+-adres: string
++uyeKontrol(Uye)
+}
+
+class Partner{
+email: String
+password: Hash
++uyeKontrol()
+}
+
+class Partnership{
+email: String
+password: Hash
++uyeKontrol()
+}
+
+class Bayi{
+-VKN: int
++getVKNlist()
+}
+
+class Gonderim{
++MaliMuhur()
++VKNyazdir(Bayi)
+}
+
+class ERPdenGonder{
++ERPImzala()
+}
+
+class WebdenGonder{
++WebImzala()
+}
+
+class TutarBilgileri{
+-not: string
+-vergitoplam: int
++getNot()
++getVergiToplam()
+}
+
+class Kalem{
+-aciklama: String
+-miktar: int
+-agirlik: float
+-tutar: int
++VergiyiAl()
+}
+
+class BankaBilgileri{
++subeadi: string
++iban: int
++Gonder()
+}
+
+eFatura"1" *-- "1"BankaBilgileri
+
+eFatura"1" - "1"Alici
+
+eFatura"1" o-- "1"TutarBilgileri
+
+TutarBilgileri"0..*" --> "1*"Kalem
+
+Gonderim ..|> Bayi
+
+Gonderim"1" - "1"eFatura
+
+Gonderim ^-- ERPdenGonder
+
+Gonderim ^-- WebdenGonder
+
+Alici ..> Partner
+
+Alici ..> Partnership
+
+@enduml
+--  
+
+
+
+
+
+

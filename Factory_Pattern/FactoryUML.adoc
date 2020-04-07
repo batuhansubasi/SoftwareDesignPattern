@@ -11,55 +11,49 @@ Class eFatura{
     +VergiHesapla()
     +ToplamTutarHesapla()
     -SiparisAnalizi()
-    #AgirlikHesapla()
 }
 
-class Alici{
+interface Alici{
 -isim: String
 -adres: string
-+siparisVer(Uye)()
++uyeKontrol(Uye)
 }
 
 class Partner{
 email: String
 password: Hash
++uyeKontrol()
+}
+
+class Partnership{
+email: String
+password: Hash
++uyeKontrol()
 }
 
 class Bayi{
 -VKN: int
++getVKNlist()
 }
 
-class Bireysel{
--TCKN: int
-}
-
-interface Gonderim{
--malimuhur: string
-+getMaliMuhur()
+class Gonderim{
++MaliMuhur()
++VKNyazdir(Bayi)
 }
 
 class ERPdenGonder{
-+token: string
-+ setMalimuhur()
++ERPImzala()
 }
 
 class WebdenGonder{
-+token: string
-+ setMalimuhur()
-+ yetkilendirme(token)
-}
-
-class MobildenGonder{
-+token: string
-+ setMalimuhur()
-+ yetkilendirme(token)
++WebImzala()
 }
 
 class TutarBilgileri{
--miktar: int
 -not: string
--vergi: string
-+VergiHesapla()
+-vergitoplam: int
++getNot()
++getVergiToplam()
 }
 
 class Kalem{
@@ -84,9 +78,7 @@ eFatura"1" o-- "1"TutarBilgileri
 
 TutarBilgileri"0..*" --> "1*"Kalem
 
-Bayi ..|> Alici
-
-Bireysel ..|> Alici
+Gonderim ..|> Bayi
 
 Gonderim"1" - "1"eFatura
 
@@ -94,12 +86,15 @@ Gonderim ^-- ERPdenGonder
 
 Gonderim ^-- WebdenGonder
 
-Gonderim ^-- MobildenGonder
-
 Alici ..> Partner
+
+Alici ..> Partnership
 
 @enduml
 --  
+
+
+
 
 
 
