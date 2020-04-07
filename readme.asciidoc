@@ -4,15 +4,15 @@
 
 === 1.Hafta - Tamamlandı √
 
-- Wiki, projects, issues sekmeleri aktif olarak kullanıldı.
+- Wiki, projects, issues sekmeleri aktif olarak kullanıldı. (1.Hafta klasörü ve diğer github sekmeleri)
 
 === 2.Hafta - Tamamlandı √
 
-- UML Diyagramı ascidocc formatında görsel görüntüsü ile beraber eklendi. (UML_Class_diagram)
+- UML Diyagramı ascidocc formatında görsel görüntüsü ile beraber eklendi. (UML_Class_diagram klasörü)
 
 === 3.Hafta - Tamamlandı √
 
-- Singleton Pattern ve Factory Pattern yaklaşımları 2 ayrı klasör ile eklendi. (Thread_Safe_Singleton ve Factory_Pattern)
-Klasör İçeriği: UML Görüntüsü, UML Kodu, Pattern Kodu.
+- Singleton Pattern ve Factory Pattern yaklaşımları 2 ayrı klasör ile eklendi. (Thread_Safe_Singleton ve Factory_Pattern klasörleri)
+- Klasör İçeriği: UML Görüntüsü, UML Kodu, Pattern Kodu.
 
 === 4.Hafta - Devam edecek ∞
