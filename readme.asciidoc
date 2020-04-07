@@ -10,7 +10,7 @@
 
 - UML Diyagramı ascidocc formatında görsel görüntüsü ile beraber eklendi. (UML_Class_diagram klasörü)
 
-- Bu ödevin teslimi d1c97abee88682bd3b367f006433e425b6df04f4 commiti ile gününde teslim edildi. Sonrasında UML yapısında değişiklik yapıldı.
+- Bu ödevin teslimi Commit: 39588d7 commiti ile gününde teslim edildi. Sonrasında UML yapısında değişiklik yapıldı.
 
 === 3.Hafta - Tamamlandı √
 
