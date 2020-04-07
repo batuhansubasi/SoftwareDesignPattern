@@ -10,6 +10,8 @@
 
 - UML Diyagramı ascidocc formatında görsel görüntüsü ile beraber eklendi. (UML_Class_diagram klasörü)
 
+- Bu ödevin teslimi d1c97abee88682bd3b367f006433e425b6df04f4 commiti ile gününde teslim edildi. Sonrasında UML yapısında değişiklik yapıldı.
+
 === 3.Hafta - Tamamlandı √
 
 - Singleton Pattern ve Factory Pattern yaklaşımları 2 ayrı klasör ile eklendi. (Thread_Safe_Singleton ve Factory_Pattern klasörleri)
