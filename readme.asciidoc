@@ -19,4 +19,4 @@
 
 === 4.Hafta - Devam edecek ∞
 
-- Prototype -> YazilimTasarimKaliplari -> Program.cs - Hem shallow hem de deep copy metoduyla nesneler kopyalandı.
+- Prototype -> YazilimTasarimKaliplari -> Program.cs - Hem shallow copy hem de deep copy metoduyla nesneler kopyalandı.
