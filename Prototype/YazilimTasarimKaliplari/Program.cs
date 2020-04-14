@@ -30,7 +30,7 @@ namespace Main
             }
         }
         [Serializable]
-        public class Parcalar 
+        public class Parcalar
         {
             public int kapiSayisi { get; set; }
             public int tekerlekSayisi { get; set; }
@@ -48,13 +48,13 @@ namespace Main
             araba1.Parcalar = pc1;
 
             Console.WriteLine("Shallow Copy Öncesi");
-            Console.WriteLine("İlk Araba:\nID: " + araba1.Id + ", Marka: " + araba1.Marka + ", Kapi Sayisi: " + araba1.Parcalar.kapiSayisi + ", Tekerlek Sayisi: " + araba1.Parcalar.tekerlekSayisi);
+            Console.WriteLine("İlk Araba:\nHashcode: " + araba1.GetHashCode() + ", ID: " + araba1.Id + ", Marka: " + araba1.Marka + ", Kapi Sayisi: " + araba1.Parcalar.kapiSayisi + ", Tekerlek Sayisi: " + araba1.Parcalar.tekerlekSayisi);
 
             var araba2 = araba1.ShallowCopy();
 
             Console.WriteLine("\nShallow Copy Sonrası");
-            Console.WriteLine("İlk Araba:\nID: " + araba1.Id + ", Marka: " + araba1.Marka + ", Kapi Sayisi: " + araba1.Parcalar.kapiSayisi + ", Tekerlek Sayisi: " + araba1.Parcalar.tekerlekSayisi);
-            Console.WriteLine("İkinci Araba:\nID: " + araba2.Id + ", Marka: " + araba2.Marka + ", Kapi Sayisi: " + araba2.Parcalar.kapiSayisi + ", Tekerlek Sayisi: " + araba2.Parcalar.tekerlekSayisi);
+            Console.WriteLine("İlk Araba:\nHashcode: " + araba1.GetHashCode() + ", ID: " + araba1.Id + ", Marka: " + araba1.Marka + ", Kapi Sayisi: " + araba1.Parcalar.kapiSayisi + ", Tekerlek Sayisi: " + araba1.Parcalar.tekerlekSayisi);
+            Console.WriteLine("İkinci Araba:\nHashcode: " + araba2.GetHashCode() + ", ID: " + araba2.Id + ", Marka: " + araba2.Marka + ", Kapi Sayisi: " + araba2.Parcalar.kapiSayisi + ", Tekerlek Sayisi: " + araba2.Parcalar.tekerlekSayisi);
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -67,14 +67,14 @@ namespace Main
             pc2.tekerlekSayisi = 6;
             araba3.Parcalar = pc2;
 
-            Console.WriteLine("\n\nDeep Copy Öncesi");
-            Console.WriteLine("Ucuncu Araba:\nID: " + araba3.Id + ", Marka: " + araba3.Marka + ", Kapi Sayisi: " + araba3.Parcalar.kapiSayisi + ", Tekerlek Sayisi: " + araba3.Parcalar.tekerlekSayisi);
+            Console.WriteLine("\n\n\nDeep Copy Öncesi");
+            Console.WriteLine("Ucuncu Araba:\nHashcode: " + araba3.GetHashCode() + ", ID: " + araba3.Id + ", Marka: " + araba3.Marka + ", Kapi Sayisi: " + araba3.Parcalar.kapiSayisi + ", Tekerlek Sayisi: " + araba3.Parcalar.tekerlekSayisi);
 
             var araba4 = araba3.DeepCopy();
 
             Console.WriteLine("\nDeep Copy Sonrası");
-            Console.WriteLine("Ucuncu Araba:\nID: " + araba3.Id + ", Marka: " + araba3.Marka + ", Kapi Sayisi: " + araba3.Parcalar.kapiSayisi + ", Tekerlek Sayisi: " + araba3.Parcalar.tekerlekSayisi);
-            Console.WriteLine("Dorduncu Araba:\nID: " + araba4.Id + ", Marka: " + araba4.Marka + ", Kapi Sayisi: " + araba4.Parcalar.kapiSayisi + ", Tekerlek Sayisi: " + araba4.Parcalar.tekerlekSayisi);
+            Console.WriteLine("Ucuncu Araba:\nHashcode: " + araba3.GetHashCode() + ", ID: " + araba3.Id + ", Marka: " + araba3.Marka + ", Kapi Sayisi: " + araba3.Parcalar.kapiSayisi + ", Tekerlek Sayisi: " + araba3.Parcalar.tekerlekSayisi);
+            Console.WriteLine("Dorduncu Araba:\nHashcode: " + araba4.GetHashCode() + ", ID: " + araba4.Id + ", Marka: " + araba4.Marka + ", Kapi Sayisi: " + araba4.Parcalar.kapiSayisi + ", Tekerlek Sayisi: " + araba4.Parcalar.tekerlekSayisi);
 
             Console.Read();
         }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\bsubasi\\source\\repos\\YazilimTasarimKaliplari\\YazilimTasarimKaliplari\\YazilimTasarimKaliplari.csproj": {}
+    "C:\\Users\\bsubasi\\Documents\\GitHub\\SoftwareDesignPattern\\Prototype\\YazilimTasarimKaliplari\\YazilimTasarimKaliplari.csproj": {}
   },
   "projects": {
-    "C:\\Users\\bsubasi\\source\\repos\\YazilimTasarimKaliplari\\YazilimTasarimKaliplari\\YazilimTasarimKaliplari.csproj": {
+    "C:\\Users\\bsubasi\\Documents\\GitHub\\SoftwareDesignPattern\\Prototype\\YazilimTasarimKaliplari\\YazilimTasarimKaliplari.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\bsubasi\\source\\repos\\YazilimTasarimKaliplari\\YazilimTasarimKaliplari\\YazilimTasarimKaliplari.csproj",
+        "projectUniqueName": "C:\\Users\\bsubasi\\Documents\\GitHub\\SoftwareDesignPattern\\Prototype\\YazilimTasarimKaliplari\\YazilimTasarimKaliplari.csproj",
         "projectName": "YazilimTasarimKaliplari",
-        "projectPath": "C:\\Users\\bsubasi\\source\\repos\\YazilimTasarimKaliplari\\YazilimTasarimKaliplari\\YazilimTasarimKaliplari.csproj",
+        "projectPath": "C:\\Users\\bsubasi\\Documents\\GitHub\\SoftwareDesignPattern\\Prototype\\YazilimTasarimKaliplari\\YazilimTasarimKaliplari.csproj",
         "packagesPath": "C:\\Users\\bsubasi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bsubasi\\source\\repos\\YazilimTasarimKaliplari\\YazilimTasarimKaliplari\\obj\\",
+        "outputPath": "C:\\Users\\bsubasi\\Documents\\GitHub\\SoftwareDesignPattern\\Prototype\\YazilimTasarimKaliplari\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\bsubasi\\AppData\\Roaming\\NuGet\\NuGet.Config",
