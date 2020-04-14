@@ -1,0 +1,222 @@
+[source,.java]
+----
+// ExportingTask.java
+
+public class ExportingTask implements Runnable {  <1>
+        private ObjectPool<ExportingProcess> pool;  
+        private int threadNo;  
+        public ExportingTask(ObjectPool<ExportingProcess> pool, int threadNo){  
+            this.pool = pool;  
+            this.threadNo = threadNo;  
+        }  
+      
+        public void run() {  <2>
+            ExportingProcess exportingProcess = pool.borrowObject();  
+            System.out.println("Thread" + threadNo + ": işleme numarasıyla beraber nesne. "  
+                    + exportingProcess.getProcessNo() + " alındı");  
+ 
+            pool.returnObject(exportingProcess);  
+  
+            System.out.println("Thread " + threadNo +": İşleme numarasıyla beraber nesne. "  
+                   + exportingProcess.getProcessNo() + " geri döndü.");  
+        }  
+  
+    }
+
+----
+ 
+<1> ExportingProcess ve ObjectPool siniflari kullanildi.
+<2> Havuzdan obje alındı.
+
+
+[source,ExportingProcess.java]
+----
+// ExportingProcess.java <1>
+
+public class ExportingProcess {  
+ private long processNo;  
+  
+    public ExportingProcess(long processNo)  {  
+         this.processNo = processNo;  
+         
+      System.out.println("işleme numarasıyla beraber nesne. " + processNo + " yaratildi."); <2>  
+     }  
+     
+    public long getProcessNo() {  
+        return processNo;  
+    }  
+}
+
+----
+
+<1> ExportingTask sinifi kullanildi.
+<2> Olusturulan tasklar buraya dusecek.
+
+[source,ObjectPool.java]
+----
+// ObjectPool.java <1>
+
+import java.util.concurrent.ConcurrentLinkedQueue;  
+import java.util.concurrent.Executors;  
+import java.util.concurrent.ScheduledExecutorService;  
+import java.util.concurrent.TimeUnit;  
+  
+public abstract class ObjectPool<T> {  
+      
+    private ConcurrentLinkedQueue<T> pool; <2>  
+         
+    private ScheduledExecutorService executorService;  <3>
+       
+    public ObjectPool(final int minObjects)   
+    {             
+        initialize(minObjects); <4>           
+    }  
+    
+    public ObjectPool(final int minObjects, final int maxObjects, final long validationInterval) { <5>   
+        initialize(minObjects);  
+ 
+        executorService = Executors.newSingleThreadScheduledExecutor();  
+        executorService.scheduleWithFixedDelay(new Runnable()  // annonymous class  
+        {  
+            @Override  
+            public void run() {  
+                int size = pool.size();  
+                 
+                if (size < minObjects) {  
+                    int sizeToBeAdded = minObjects + size;  
+                    for (int i = 0; i < sizeToBeAdded; i++) {  
+                        pool.add(createObject());  
+                    }  
+                } else if (size > maxObjects) {  
+                    int sizeToBeRemoved = size - maxObjects;  
+                    for (int i = 0; i < sizeToBeRemoved; i++) {  
+                        pool.poll();  
+                    }  
+                }  
+            }  
+        }, validationInterval, validationInterval, TimeUnit.SECONDS);  
+    }  
+    
+    public T borrowObject() {  <6>
+        T object;  
+        if ((object = pool.poll()) == null)  
+        {  
+            object = createObject();  
+        }  
+        return object;  
+    }  
+ 
+    public void returnObject(T object) { <7>  
+        if (object == null) {  
+            return;  
+        }  
+        this.pool.offer(object);  
+    }  
+ 
+    public void shutdown(){ <8> 
+        if (executorService != null){  
+            executorService.shutdown();  
+        }  
+    }  
+
+    protected abstract T createObject();  
+  
+    private void initialize(final int minObjects)  {  
+        pool = new ConcurrentLinkedQueue<T>();  
+        for (int i = 0; i < minObjects; i++) {  
+            pool.add(createObject());  
+        }  
+    }  
+}
+----
+<1> Nesne sayisini olusturmak icin olusturuldu.
+<2> Thread Safe kullanıldı, sıralama olarak FIFO kullanılıyor.
+<3> Minimum ve maximum parametreleri kullanıldı. Obje numarası eğer minimumda az ise, örnekler olusacak. Eğer maximum sayısı, obje sayisindan büyükse fazlalık olanlar havuzdan kaldırılacak.
+<4> Havuzu baslangic durumu atar.
+<5> Havuz kosulları kontrol edilir.
+<6> Yeni boşta olan nesne havuzdan getirilir. Eğer havuzun hiç bir obje ile alakası yoksa, yeni bir obje yaratılır.
+<7> Geridönen obje havuzda.
+<8> Havuzu sonlandırır.
+
+[source,Main.java]
+----
+// Main.java 
+
+import java.util.concurrent.ExecutorService;  
+import java.util.concurrent.Executors;  
+import java.util.concurrent.TimeUnit;  
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.Scanner;
+
+public class Main{  
+      private ObjectPool<ExportingProcess> pool;  
+      private AtomicLong processNo=new AtomicLong(0);  
+      public void setUp(int min, int max, int sure) {  
+      pool = new ObjectPool<ExportingProcess>(min, max, sure)  <1>
+        {  
+            protected ExportingProcess createObject()  
+            {   
+                return new ExportingProcess( processNo.incrementAndGet());  <2>
+            }  
+        };  
+    }  
+
+    public void tearDown() {  
+        pool.shutdown();  
+    } 
+
+    public void testObjectPool() {  
+        ExecutorService executor = Executors.newFixedThreadPool(8); <3>  
+
+        executor.execute(new ExportingTask(pool, 1));  
+        executor.execute(new ExportingTask(pool, 2));  
+        executor.execute(new ExportingTask(pool, 3));  
+        executor.execute(new ExportingTask(pool, 4));  
+        executor.execute(new ExportingTask(pool, 5));  
+        executor.execute(new ExportingTask(pool, 6));  
+        executor.execute(new ExportingTask(pool, 7));  
+        executor.execute(new ExportingTask(pool, 8));  
+  
+        executor.shutdown();  
+        try {  
+            executor.awaitTermination(30, TimeUnit.SECONDS);  
+            } catch (InterruptedException e)  
+              
+              {  
+               e.printStackTrace();  
+              }  
+    }  
+
+    public static void main(String args[])  {   
+        Main op=new Main();  
+        
+        Scanner scanIn = new Scanner(System.in);
+
+        System.out.println("\nHavuz için minimum sayi giriniz");
+        String sWhatever = scanIn.nextLine();
+        int havuzMinimum=Integer.parseInt(sWhatever);
+
+        sWhatever = "";
+
+        System.out.println("\nHavuz için maximum sayi giriniz");
+        sWhatever = scanIn.nextLine();
+        int havuzMaximum=Integer.parseInt(sWhatever);
+
+        sWhatever = "";
+
+        System.out.println("\nSaniye bilgisi giriniz");
+        sWhatever = scanIn.nextLine();
+        int saniye=Integer.parseInt(sWhatever);
+
+        scanIn.close();
+
+        op.setUp(havuzMinimum,havuzMaximum,saniye);  
+        op.tearDown();  
+        op.testObjectPool();  
+   }   
+}
+----
+
+<1> ExportingProcess tipinde objeler icin havuz olusturur.
+<2> Olusturulması icin zaman gereken test objeleri yaratılır.
+<3> Bölünmüş threadlerde 8 tane task çalıştırılır.
