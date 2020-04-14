@@ -20,5 +20,8 @@
 === 4.Hafta - Tamamlandı √
 
 - Prototype -> YazilimTasarimKaliplari -> Program.cs - Hem shallow copy hem de deep copy metoduyla nesneler kopyalandı.
+- Prototype -> ShallowandDeepCopy.adoc - Kodun dokümantasyonu ascidoc formatında yapıldı.
+- ObjectPool -> YazilimTasarimKaliplari -> Java dilinde proje dizini paylasildi.
+- ObjectPool -> ObjectPool.adoc - Kodun dokümantasyonu ascidoc formatında yapıldı.
 
-=== 5.Hafta - Devam edecek ∞
+=== 5.Hafta - Devam edecek 
