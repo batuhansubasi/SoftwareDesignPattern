@@ -1,0 +1,47 @@
+.ObjectPool UML Diyagramı
+[uml,file="umlObjectPool.png"]
+--
+@startuml
+left to right direction
+
+abstract class ObjectPool{
+-pool: ConcurrentLinkedQueqe<T>
+-executerService: ScheduledExecetorService
++ObjectPool(final int minObjects)
++ObjectPool(final int minObjects, final int maxObjects, final long validationInterval)
++borrowObject(): T
++returnObject(): void
++shutdownPool(): void
+<<abstract>>#createObject(): T
++initializate(final int minObjects)
+}
+
+class ExportingTask{
+-pool: ObjectPool<ExportingProcess>
+-threadNo: int
++ExportingTask(ObjectPool>ExportingProcess,int threadNo>)
++run():void(@override)
+}
+
+class ExportingProcess{
+-processNo: long
++ExportingProcess(long processNo)
++getProcessNo():long
+}
+
+class Main{
+-pool: ObjectPool<Exporting Process>
+-processNo: AtomicLong
++setUp(int havuzMinimum, int havuzMaximum, int saniye): void
++tearDown(): void
++testObjectPool(): void
++main():void
+}
+
+ExportingTask -> ObjectPool
+ExportingTask -> ExportingProcess
+Main -> ExportingTask
+
+@enduml
+--  
+

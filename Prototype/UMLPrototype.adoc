@@ -1,0 +1,30 @@
+.Prototype UML Diyagramı
+[uml,file="umlPrototype.png"]
+--
+@startuml
+left to right direction
+
+class Araba{
++int id
++String marka
++Parcalar parcalar
++ShallowCopy(): Araba
++DeepCopy(): Araba
+}
+
+class Parcalar{
++int kapiSayisi
++int tekerlekSayisi
+}
+
+class Main{
+
+}
+
+Araba *-- Parcalar
+
+Main -> Araba
+
+@enduml
+--  
+
