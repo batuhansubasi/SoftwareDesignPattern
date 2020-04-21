@@ -1,0 +1,109 @@
+[source,.cs]
+----
+using System;
+using System.Collections.Concurrent;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace YazilimTasarimKaliplari_Builder
+{
+    class CookDirector <1>
+    {
+        public void constructPizza(PizzaBuilder pizzaBuilder) <2>
+        {
+            pizzaBuilder.SetHamur();
+            pizzaBuilder.SetSos();
+            pizzaBuilder.SetMalzeme();
+        }
+    }
+
+    abstract class PizzaBuilder <3>
+    {
+        protected Pizza pizza;
+        public Pizza Pizza
+        {
+            get { return pizza; } <4>
+        }
+        public abstract void SetHamur(); <5>
+        public abstract void SetSos();
+        public abstract void SetMalzeme();
+    }
+
+    class Vegetarian : PizzaBuilder <6>
+    {
+        public Vegetarian() 
+        {
+            pizza = new Pizza();
+        }
+        public override void SetHamur() =>  pizza.Hamur = "İnce"; <7>
+        public override void SetSos() => pizza.Sos = "Az";
+        public override void SetMalzeme() => pizza.Malzeme = "Mozarella, biber, mantar";
+    }
+
+    class Classic : PizzaBuilder
+    {
+        public Classic()
+        {
+            pizza = new Pizza();
+        }
+        public override void SetHamur() => pizza.Hamur = "Kalın";
+        public override void SetSos() => pizza.Sos = "Bol";
+        public override void SetMalzeme() => pizza.Malzeme = "Sucuk, mozarella, biber";
+    }
+
+    class Pizza <8>
+    {
+        public string Hamur { get; set; } <9>
+        public string Sos { get; set; }
+        public string Malzeme { get; set; }
+
+        public override string ToString()
+        { <10>
+            return $"Hamur Seçiminiz: {Hamur} , Sos Seçiminiz: {Sos} ve Malzemeler: {Malzeme} olarak siparişiniz verilmiştir.";
+        }
+    }
+
+    class Client
+    {
+        static void Main(string[] args)
+        {
+            PizzaBuilder pizzaBuilder = new Vegetarian(); <11>
+            CookDirector pizzaDirector = new CookDirector(); 
+            pizzaDirector.constructPizza(pizzaBuilder); <12>
+
+            Console.WriteLine(pizzaBuilder.Pizza.ToString());
+
+            pizzaBuilder = new Classic();
+            pizzaDirector.constructPizza(pizzaBuilder);
+            Console.WriteLine(pizzaBuilder.Pizza.ToString());
+
+            Console.Read();
+        }
+    }
+
+}
+----
+
+<1> Director sınıfı olusturuldu.
+
+<2> Builderdaki nesneye göre, ürün olusturuldu Director tarafından.
+
+<3> Soyut sınıf türünde builder olusturuldu.
+
+<4> Sinif icerisindeki pizza nesnesi, public nesne olarak döndürüldü.
+
+<5> Soyut metotlar olusturuldu.
+
+<6> Soyut sınıftan extend edilerek concrete builder olusturuldu. 
+
+<7> Extend edildiği soyut sınıftaki metotlar zorunlu olarak subsınıflarda da tanımlamdı.
+
+<8> Urun sınıfı olusturuldu.
+
+<9> Product sınıfımızın attributesları olusturuldu.
+
+<10> Object sınıfından tostring metodu override yapıldı.
+
+<11> Nesnemizin clientte tipi belirlendi, buildera bu nesne tipinin bilgisi verildi.
+
+<12> Director sınıfı olusturuldu ve bu sınıftan product nesnesi olusturuldu.

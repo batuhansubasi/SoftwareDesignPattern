@@ -1,0 +1,56 @@
+.Builder UML Diyagrami
+[uml,file="umlBuilder.png"]
+--
+@startuml
+left to right direction
+
+class CookDirector{
++constructorPizza(pizzaBuilder: PizzaBuilder): void
+}
+
+abstract class PizzaBuilder{
+#pizza: Pizza
++Pizza: Pizza
++setHamur(): abstract void
++setSos(): abstract void
++setMalzeme(): abstract void
+}
+
+class Vegeratian{
++override SetHamur(): void
++override setSos(): void
++override setMalzeme():void
+}
+
+class Classic{
++override SetHamur(): void
++override setSos(): void
++override setMalzeme():void
+}
+
+class Pizza{
++Hamur: string
++Sos : string
++Malzeme: string
++override toString(): string
+}
+
+class Client{
++pizzabuilder: PizzaBuilder
++pizzadirector: CookDirector
+}
+
+CookDirector o-- PizzaBuilder
+
+PizzaBuilder <|-- Vegeratian
+
+PizzaBuilder <|-- Classic
+
+Vegeratian ..> Pizza
+
+Classic ..> Pizza
+
+Client -- CookDirector
+
+@enduml
+--
