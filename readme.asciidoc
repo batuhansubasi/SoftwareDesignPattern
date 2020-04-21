@@ -30,7 +30,7 @@
 
 === 5.Hafta - Tamamlandı √
 
-- Builder -> Builder.adoc - Builder Pattern için yazılmış olan projenin kodları satır satır ascidoc formatında dokümante edildi, 
+- Builder -> Builder.adoc - Builder Pattern için yazılmış olan projenin kodları satır satır ascidoc formatında dokümante edildi.
 - Builder -> BuilderUML.adoc - Projenin UML' inin kodu paylaşıldı.
 - Builder -> BuilderUML.png - Projenin UML görüntüsü paylaşıldı.
 - Builder -> Program.cs - C# dilinde builder pattern örneği oluşturuldu.
