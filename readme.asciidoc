@@ -28,4 +28,11 @@
 - ObjectPool -> UMLObjectPool.adoc -> UML Diyagramının kodu paylaşıldı.
 - ObjectPool -> UMLObjectPool.png -> UML Diyagramının ekran görüntüsü paylaşıldı.
 
-=== 5.Hafta - Devam edecek 
+=== 5.Hafta - Tamamlandı √
+
+- Builder -> Builder.adoc - Builder Pattern için yazılmış olan projenin kodları satır satır ascidoc formatında dokümante edildi.
+- Builder -> BuilderUML.adoc - Projenin UML' inin kodu paylaşıldı.
+- Builder -> BuilderUML.png - Projenin UML görüntüsü paylaşıldı.
+- Builder -> Program.cs - C# dilinde builder pattern örneği oluşturuldu.
+
+=== 6.Hafta - Devam edecek 
