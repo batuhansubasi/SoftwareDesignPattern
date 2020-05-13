@@ -1,0 +1,64 @@
+.Iterator Pattern UML Diyagrami
+[uml,file="umlIterator.png"]
+--
+@startuml
+
+title Iterator Pattern UML Diyagrami
+
+class TVKnali{
++int ObjectCounter
++String KanalAdi
+}
+
+interface IKanalIterator{
++İlkKanal(): TVKnali
++SonrakiKanal(): SonrakiKanal()
++GecerliKanal(): GecerliKanal()
++bittiMi(): bool
+}
+
+interface IKanalAggregate{
++getIterator(): IKanalIterator
+}
+
+class KanalConcreteAggregate{
+-List<TVKnali> _kanalListesi
++kanalSayisi(): int
++Ekle(TVKnali): void
++GetItem(int): TVKnali
++getIterator(): IKanalIterator
+}
+
+class KanalConcreteIterator {
+-KanalConcreteIterator kanallar
+-int deger
++KanalConcreteIterator(KanalConcreteAggregate)
++İlkKanal(): TVKnali
++bittiMi(): bool
++GecerliKanal(): TVKnali
++SonrakiKanal(): TVKnali
+}
+
+class Program{
++kanallar: string
+}
+
+class Factory{
+-havuzKapasite: int
+-objPool: Queue
++getTVKnali(string): TVKnali
+-getTvKnali(string): TVKnali
+#HavuzdanGetir(string): TVKnali
+}
+
+Program --> IKanalIterator
+Program --> IKanalAggregate
+KanalConcreteAggregate --|> IKanalAggregate
+KanalConcreteIterator --|> IKanalIterator
+Program --> Factory 
+KanalConcreteIterator --|> KanalConcreteAggregate
+KanalConcreteAggregate ..> KanalConcreteIterator
+KanalConcreteIterator "kullanır" --> TVKnali
+
+@enduml
+--

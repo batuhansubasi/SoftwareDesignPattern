@@ -1,0 +1,11 @@
+C:\Users\bsubasi\source\repos\IteratorPattern\IteratorPattern\bin\Debug\netcoreapp3.1\IteratorPattern.exe
+C:\Users\bsubasi\source\repos\IteratorPattern\IteratorPattern\bin\Debug\netcoreapp3.1\IteratorPattern.deps.json
+C:\Users\bsubasi\source\repos\IteratorPattern\IteratorPattern\bin\Debug\netcoreapp3.1\IteratorPattern.runtimeconfig.json
+C:\Users\bsubasi\source\repos\IteratorPattern\IteratorPattern\bin\Debug\netcoreapp3.1\IteratorPattern.runtimeconfig.dev.json
+C:\Users\bsubasi\source\repos\IteratorPattern\IteratorPattern\bin\Debug\netcoreapp3.1\IteratorPattern.dll
+C:\Users\bsubasi\source\repos\IteratorPattern\IteratorPattern\bin\Debug\netcoreapp3.1\IteratorPattern.pdb
+C:\Users\bsubasi\source\repos\IteratorPattern\IteratorPattern\obj\Debug\netcoreapp3.1\IteratorPattern.csprojAssemblyReference.cache
+C:\Users\bsubasi\source\repos\IteratorPattern\IteratorPattern\obj\Debug\netcoreapp3.1\IteratorPattern.AssemblyInfoInputs.cache
+C:\Users\bsubasi\source\repos\IteratorPattern\IteratorPattern\obj\Debug\netcoreapp3.1\IteratorPattern.AssemblyInfo.cs
+C:\Users\bsubasi\source\repos\IteratorPattern\IteratorPattern\obj\Debug\netcoreapp3.1\IteratorPattern.dll
+C:\Users\bsubasi\source\repos\IteratorPattern\IteratorPattern\obj\Debug\netcoreapp3.1\IteratorPattern.pdb

@@ -1,0 +1,52 @@
+.Observer Pattern UML Diyagrami
+[uml,file="umlObserver.png"]
+--
+@startuml
+
+title Iterator Pattern UML Diyagrami
+
+abstract class Observer{
++abstract Güncelle():void
+}
+
+class Ögretmen {
++override Güncelle(): void
+}
+
+class Ögrenci {
++override Güncelle(): void
+}
+
+class Dekan {
++override Güncelle(): void
+}
+
+class VizeFinal{
++DersAdi: string
++HocaAdi: string
++Kredisi: int
++notGirildimi: bool
++NotGirildimi(): bool
++List<Observer>
++AboneEkle(Observer): void
++AboneCikar(Observer): void
++HaberVer(): void
+}
+
+class Program{
+
+}
+
+
+Ögretmen --|> Observer
+Ögrenci --|> Observer
+Dekan --|> Observer
+Program "kullanır" --> VizeFinal
+Program "kullanır" --> Ögrenci
+Program "kullanır" --> Ögretmen
+Program "kullanır" --> Dekan
+Observer --o VizeFinal
+
+
+@enduml
+--
