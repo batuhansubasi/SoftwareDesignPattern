@@ -35,4 +35,9 @@
 - Builder -> BuilderUML.png - Projenin UML görüntüsü paylaşıldı.
 - Builder -> Program.cs - C# dilinde builder pattern örneği oluşturuldu.
 
-=== 6.Hafta - Devam edecek 
+=== 6.Hafta - Tamamlandı √
+
+- Observer_Pattern
+- Iterator_Pattern
+
+=== 7.Hafta - Devam edecek 
