@@ -40,4 +40,8 @@
 - Observer_Pattern
 - Iterator_Pattern
 
-=== 7.Hafta - Devam edecek 
+=== 7.Hafta - Tamamlandı √
+
+- SOLID Prensipleri eklendi.
+- Decorator Pattern eklendi.
+- Chain of Responsibility Pattern eklendi.
