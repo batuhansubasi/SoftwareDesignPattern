@@ -1,0 +1,48 @@
+.Decorator Pattern
+[uml,file="DecoratorPattern.png"]
+--
+@startuml
+
+title Decorator Pattern UML Diyagramı
+
+interface IKoronaOnlemler {
++maskeTak(): void
++sosyalMesafeKoru(double uzaklik): bool
+}
+
+class KoronaOnlemler{
+-KoronaOnlemler koronaOnlemler
+-object padlock
+-KoronaOnlemler()
++getKoronaOnlemler(): KoronaOnlemler
++maskeTak(): void
++sosyalMesafeKoru(double uzaklik): bool
+}
+
+abstract class DecoratorKoronaOnlemler{
+-IKoronaOnlemler iKoronaOnlemler
++DecoratorKoronaOnlemler(IKoronaOnlemler iKoronaOnlemler)
++maskeTak(): void
++sosyalMesafeKoru(double uzaklik): bool
+}
+
+class KoronaYeniOnlem {
++KoronaYeniOnlem(IKoronaOnlemler iKoronaOnlemler)
++sokagaCikma(int gün): void
+}
+
+class Program{
++Main:void
+}
+
+
+IKoronaOnlemler <|.. KoronaOnlemler
+IKoronaOnlemler <|.. DecoratorKoronaOnlemler
+DecoratorKoronaOnlemler <|-- KoronaYeniOnlem
+KoronaOnlemler <-- "kullanır" Program
+KoronaYeniOnlem <-- "kullanır" Program
+DecoratorKoronaOnlemler o-- "iKoronaOnlemler" IKoronaOnlemler
+KoronaOnlemler --o "koronaOnlemler" KoronaOnlemler
+
+@enduml
+--

@@ -1,0 +1,250 @@
+== SOLID
+
+*Batuhan Subaşı - 160202091*
+
+- - -
+
+=== SOLID
+
+Geliştirilen kod mimarisinin kodu yazan ve diğerleri tarafından, üzerinde fazla vakit harcanmadan anlaşılabilmesi için uygulanan yazılım tasarım prensibidir. Kolay ve anlaşılabilir kod aslında karmaşık yazılmış olan koda göre tasarlanması daha kolaydır ve yazılması daha kısa sürer. Aynı zamanda karmaşık kodun hata alma ihtimali yüksektir. Alınan bir hatanın çözümü için harcanan sürede daha fazladır. Bu yüzden SOLID prensipleri kullanılarak bütün bunların önüne geçilmiş olur.
+
+Proje bütçesine, büyüklüğüne, şartlarına vs. göre SOLID prensipleri değişebilir. 
+
+- - -
+
+=== SOLID PRENSİBİNİN AVANTAJLARI
+
+* Kodun tasarlanması daha kısa sürede gerçekleşiyor.
+
+* Hata olma olasılığı daha düşük
+
+* Yeni gelen değişiklik isteklerine daha rahat şekilde cevap verebilme
+
+* Tekrar kullanılabilir (reusable) yapıya sahip olma
+
+- - -
+
+=== SOLID - Single Responsibility Prensibi
+
+* Yazılmış olan sınıf, sadece tek bir amaca hizmet etmelidir. Eğer burada birden fazla amaç var ise, alt sınıflara bölmelendirme yapılmalıdır.
+
+* Yapının anlamlı parçalardan oluşmasıdır. Bu sayede anlamlı parçalar en küçük yapıtaşlarına kadar bölündüklerinde, başka çalışmalarda veya yapılarda tekrar olarak kullanılabilirler.
+
+* Kodun başkası tarafından okunabilirliği artar ve değişim gerektiğinde karmaşık yapı yerine basit bir yapı içerisinden değişiklik sağlanabilir.
+
+* Debug yapması kod içerisinde daha kolay, test etme senaryosu daha anlaşılabilir.
+
+* Componentler birbirine gevşek bağlı durumda.
+
+- - -
+
+=== SOLID - Open - Closed Prensibi
+
+* Yapının ve içerisindeki componentlerin zaman içerisinde değişmesini engelleyecek şekilde tasarlayıp, geliştirilmesine açık şekilde dizayn edilmesidir. Böylece ilgili component değişikliğe uğramaksızın çalışmaya devam eder. Bu componenti kullanan diğer yapılarda sorun yaşamaz. Yapılan sonraki geliştirmeler, önceki durumları bozmadığından gelişmeye açık bir yapı benimsenmiş olur.
+
+- - -
+
+=== SOLID - Liskov's Substitution Prensibi
+
+* Component, bağlı olduğu üst sınıftaki metotları kullanabilir. Fakat üst sınıfında tanımlanmış olan bütün metotları karşılaması gerekir. Üst sınıfın altında miras almış olan bütün alt sınıflarda bu kural uygulanmalıdır. Bu şekilde dizayn edilmemiş modellerde; sınıfın yapamadığı bir özelliği ona aitmiş gibi göstermek çalışan kodun hata almasına yol açabilir.
+
+- - -
+
+=== SOLID - Interface Segregation Prensibi
+
+* Componentler, başka sınıflardaki yapılara erişmeleri gerektiğinde, o yapı içerisindeki bütün metotları görmek yerine sadece ihtiyaçları olabilecek olan metotları kullanabileceklerinin sağlanmasıdır. Arayüz kullanılarak metotlar bölünür ve ihtiyacı olan sınıf bu arayüzü implemente ederek ihtiyacı olduğu metotlara erişir.
+
+* Arayüzü kullanacak olan geliştirici (arayüzü yazan değil), miras aldığı arayüzün iç yapısına gezmesi gerektiğinde, kendisinin ihtiyacının olmayacağı metotları görmez. Bu sayede kodu anlaması gerektiğinde daha kısa sürede kavrayabilir. Arayüzün okunabilirliği artmış olur.
+
+- - -
+
+=== SOLID - Dependency Inversion Prensibi
+
+* Herhangi bir componentin bir nesneye ya da yapıya ihtiyacı olduğunda, o nesneyi direk çağırmak yerine araya soyut sınıf ekleyerek aradaki bağlantıyı loose coupling yapmaya çalışmaktır. Böylece, konum olarak üst segmentte olan nesne, alt nesnedeki değişiklikten etkilenmez. Aradaki bağlantı sayesinde birbirlerine dolaylı yönden bağlanırlar.
+
+- - -
+
+
+=== Single Responsibility Principle Örnek Kaynak Kodları
+
+* SOLID Prensiplerinden ilkini kod üzerinden açıklamaya çalışacağım, örneğim basit bir fatura senaryosu üzerine.
+
+===== BasariliMesajlar Sınıfı
+
+[source,c#]
+-----
+    class BasariliMesajlar <1>
+    {
+        public static void BaslangicMesajı() <2>
+        {
+            Console.WriteLine("Program basarili sekilde basladi!");
+        }
+
+        public static void BitisMesajı() <2>
+        {
+            Console.Write("Program basarili sekilde sonlandı!");
+            Console.ReadLine();
+        }
+
+    }
+-----
+
+<1>  BasariliMesajlar isminde sınıf oluşturuldu. Main içerisinde program başarılı şekilde başladığında ve bittiğinde ilgili statik fonksiyonlar direkt olarak çağrıldı.
+
+<2> Her metotun kendine ait rolü var, program basarılı sekilde baslandığında ekrana yazı yazma rolü BaslangicMesajı metoduna, başarılı şekilde bittiği zaman ise BitisMesajı metodu görev yapmaktadır.
+
+
+===== Fatura Sınıfı
+
+[source,c#]
+-----
+    public class Fatura <1>
+    {
+        public int gonderenVKN; <2>
+
+        public int aliciTCKN; <2>
+
+        public double tutar; <2>
+    }
+-----
+
+<1> Fatura sınıfı oluşturuldu. Main içerisinde buradan oluşturduğumuz nesne üzerinden işlemler yapacağız.
+
+<2> Stateleri tanımlandı.
+
+
+===== FaturaBitir Sınıfı
+
+[source,c#]
+-----
+    public class FaturaBitir <1>
+    {
+        public static void FaturaYarat(Fatura fatura) <2>
+        {
+            Console.WriteLine($"Fatura yaratıldı. Gönderen VKN: { fatura.gonderenVKN } - Alıcı TCKN: { fatura.aliciTCKN } - Tutar: { fatura.tutar }");
+        }
+    }
+-----
+<1> FaturaBitir sınıfı oluşturuldu. Kullanıcıdan ve veritabanından gerekli işlemler bittiğinde faturanın son aşamada oldugunun rol bilgisini verdi.
+
+<2> FaturaYarat metodu ise kendine gelmiş olan faturayı sadece oluşturma görevini üstlendi.
+
+
+===== FaturaVerileri Sınıfı
+
+[source,c#]
+-----
+    public class FaturaVerileri <1>
+    {
+        public static Fatura KullanıcıdanAl() <2>
+        {
+            Fatura fatura = new Fatura();
+
+            Console.Write("Gönderen VKN giriniz: ");
+            fatura.gonderenVKN = Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Alıcı TCKN giriniz:");
+            fatura.aliciTCKN = Convert.ToInt32(Console.ReadLine());
+
+            return fatura;
+        }
+
+        public static Fatura VeritabanındanCek(Fatura fatura) <3>
+        {
+            if (fatura == null)
+            {
+                fatura = new Fatura();
+            }
+
+            //Veritabanından gittik, tutar bilgisini çektik.
+            fatura.tutar = 100.00;
+
+            return fatura;
+        }
+    }
+-----
+<1> FaturaVerileri sınıfı oluşturuldu. Faturanın verilerinin alınması rolünü üstlendi.
+
+<2> Kullanıcının konsol ekranından sadece input almasıyla ilgilendi ve faturanın ilgili statelerine bu değeri işledi.
+
+<3> Veritabanından faturanın tutar bilgisinin dolmasını sağladı.
+
+
+===== HataliMesajlar Sınıfı
+
+[source,c#]
+-----
+    class HataliMesajlar <1>
+    {
+        public static void hataliVKN(int VKN) <2>
+        {
+            if (VKN != 111111111)
+            {
+                Console.WriteLine($"Girmiş oldugunuz VKN ( { VKN } )bilgisi yanlış! Yine de fatura kesilecektir.");
+            }
+        }
+
+        public static void hataliTCKN(int TCKN) <3>
+        {
+            if (TCKN != 111111111)
+            {
+                Console.WriteLine($"Girmiş oldugunuz VKN ( { TCKN } )bilgisi yanlış! Yine de fatura kesilecektir.");
+            }
+        }
+    }
+-----
+<1> HataliMesajın konsol ekranına bastırılması görevini sınıf rolünde üstlendi.
+
+<2> Kullanıcının girmiş olduğu VKN' nin hatalı oldugunu bilgisi konsola bastı.
+
+<3> Kullanıcının girmiş olduğu TCKN' nin hatalı oldugunu bilgisi konsola bastı.
+
+===== Program Sınıfı
+
+[source,c#]
+-----
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            BasariliMesajlar.BaslangicMesajı(); <1>
+
+            Fatura eFatura = FaturaVerileri.KullanıcıdanAl(); <2>
+
+            eFatura = FaturaVerileri.VeritabanındanCek(eFatura); <3>
+
+            HataliMesajlar.hataliVKN(eFatura.gonderenVKN); <4>
+            HataliMesajlar.hataliTCKN(eFatura.aliciTCKN); <4>
+
+            FaturaBitir.FaturaYarat(eFatura); <5>
+
+            BasariliMesajlar.BitisMesajı(); <6>
+        }
+    }
+-----
+<1> BasariliMesajlar sınıfından statik metod çağrıldı, programın başarılı olarak başladığının bilgisi ekrana bastırdı.
+
+<2> eFatura nesnesi oluşturuldu ve bu nesnenin ilk bilgileri kullanıcı tarafından alındı.
+
+<3> Veritabanından faturanın tutar bilgisi dolduruldu.
+
+<4> TCKN ve VKN bilgileri ayrı ayrı sorgulandı.
+
+<5> FaturaYarat metoduyla fatura kaydedildi.
+
+<6> Program çıktısı buradan görüntülenebilir => <<Single Responsibility Çıktı Görüntüsü>>
+
+Üstteki yazılmış örnek çalışmada görüldüğü gibi herkes sadece tek bir rol üstlendi ve rolünün getirdiği sorumluluğu üstlenmiş oldu.
+
+- - -
+
+=== Single Responsibility Çıktı Görüntüsü
+
+
+image::Output.PNG[]
+
+- - -
+
+=== GENEL SONUÇ
+
+*  *Single Responsibility Prensibi* bu programda her nesne tek rolü üstlendi. Fatura işlemlerinin tek tek yapılması sayesinde kontrolü daha rahat bir şekilde sağlandı. Prensip, kodun okunabilirliğini arttırmak amacıyla ve alınabilecek herhangi bir hatanın çok daha rahat bir şekilde düzeltilebileceği düşünülerek kullanıldı.

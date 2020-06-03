@@ -1,0 +1,56 @@
+.ChainofResponsibility Pattern
+[uml,file="ChainofResponsibility.png"]
+--
+@startuml
+
+title ChainofResponsibility Pattern UML Diyagramı
+
+class İzinDurumu{
++int gidilecekYol
++Kisi kisi
++İzinDurumu(int gidilecekYol, string isim, string soyisim)
++ShallowCopy(): object
++DeepCopy(): İzinDurumu
+}
+
+class Kisi{
++string isim,
++string soyisim,
++Kisi(string isim, string soyisim)
+}
+
+abstract class İzinDegerlendir{
++İzinDegerlendir successor
++abstract talepDegerlendir(İzinDurumu izinDurumu): void
++ustOrganizasyonaGit(İzinDegerlendir successor): void
++next(İzinDurumu izinDurumu): void
+}
+
+class Aile {
++override talepDegerlendir(İzinDurumu izinDurumu): void
+}
+
+class Kaymakam {
++override talepDegerlendir(İzinDurumu izinDurumu): void
+}
+
+class Vali {
++override talepDegerlendir(İzinDurumu izinDurumu): void
+}
+
+class Program {
++Main:void
+}
+
+İzinDegerlendir <|-- Aile
+İzinDegerlendir <|-- Kaymakam
+İzinDegerlendir <|-- Vali
+İzinDegerlendir *-- "successor" İzinDegerlendir
+İzinDurumu *-- Kisi
+Aile <-- "kullanır" Program
+Kaymakam <-- "kullanır" Program
+Vali <-- "kullanır" Program
+İzinDurumu <-- "kullanır" Program
+
+@enduml
+--

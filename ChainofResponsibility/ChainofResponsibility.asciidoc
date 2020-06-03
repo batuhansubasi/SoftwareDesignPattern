@@ -1,0 +1,330 @@
+== Chain of Responsibility (Sorumluluk Zinciri) Tasarım Kalıbı
+
+*Batuhan Subaşı - 160202091*
+
+- - -
+
+=== Chain of Responsibility
+
+Yazılım tarafında yapısal ilişki, mümkün olduğunca gevşek olacak şekilde birbirlerine bağlanması gerekir. Yapılan istek sonucu kullanılan zincir yapısı ile takip edilmesi gereken nesneler sırayla zincire eklenir. Kişinin ulaşmak istediği yere kadar halkalar dolaşılmış olur. İşlem tamamlandığında zincir halkadan çıkartılır. 
+
+* Benzer sorumluluklara sahip farklı sınıflar içerisinden yapılmak istenen iş için sorumluluğun kime yükleneceği karar veriliyor.
+
+* Her onay ayrı bir sınıf içerisinde gerçekleşiyor.
+
+* Her sınıf birbirinden soyut şekilde çalışıyor.
+
+* Her nesnenin kabul etmiş olduğu ortak bir mesaj var.
+
+* Amaç ilgili mesaja onay vermek fakat onay verirken ki kriterleri nesnenin iç yapısına bağlı olarak değişiyor.
+
+* Bu örüntü davranışsal kalıplar içerisindedir.
+
+* Kullanıldı alanlara ise mail sunucularında gelen mesajı filtreleme ve dosya loglama işlemleri örnek verilebilir.
+
+- - -
+
+=== Chain of Responsibility Avantajları
+
+* Bu tasarım örüntüsü sayesinde aynı göreve bağlı olan nesneler gevşek bağlanma (loose coupling) şeklinde bağlanmış oluyor. Böylece birbirlerinin içerisinde yapmış oldukları işlerden haberi olması gerektiği kadar oluyor. Bütün bu maddelerin bize avantajı ise orta-büyük çaplı projelerde gelen değişiklik isteklerine rahat bir şekilde cevap verilebiliyor. Yapılmak istenilen ilgili nesnedeki değişiklik, diğer nesneleri etkilemeyecek şekilde yapıyor.
+
+* Kod olarak bu tasarım örüntüsü yerine if-else yapısı gibi kontrol mekanizmalarıyla ilgili mesaj onayı verilebilir fakat gelen değişiklik isteklerinde, koda yeni bir geliştiricinin ekleme yapması kolay olmayacaktır. Kurulan zincir-halka yapısı sayesinde değişiklik esneklik kazanır.
+
+- - -
+
+=== Chain of Responsibility Yapısı
+
+* *Handler:* Mesajı ele alması için arayüz tanımlar.
+
+* *Concrete Handler:* Sorumlu olduğu mesajı ele alır ve işler. Gerekirse iletim de yapar.
+
+* *Client:* Mesajı, concrete handlerın sırasını belirterek iletir. 
+
+- - -
+
+=== Chain of Responsibility için Gerekli Olanlar
+
+* Bütün sınıfların anlayabileceği ortak bir mesaj
+
+* Zincir yapısına ihtiyaç var
+
+* Check metoduna ihtiyaç var. (override)
+
+- - -
+
+=== Chain of Responsibility Örnek Kaynak Kodları
+
+* Bu çalışmada yapıyı güçlendirmek adına önceki konulardan Prototype Creational Pattern'i eklendi.
+
+===== İzinDurumu Sınıfı
+
+[source,c#]
+-----
+    class İzinDurumu <1>
+    {
+        //Yolculuk yapacak kişinin KM bilgisiyle beraber izin istemesi => Mesaj
+
+        public int gidilecekYol { get; set; }
+
+        public Kisi kisi; <2>
+
+        public İzinDurumu(int gidilecekYol, string isim, string soyisim)<3>
+        { 
+            this.gidilecekYol = gidilecekYol;
+            kisi = new Kisi(isim, soyisim);
+        }
+
+        public object ShallowCopy() <4>
+        {
+            return this.MemberwiseClone();
+        }
+
+        public İzinDurumu DeepCopy() <5>
+        {
+            İzinDurumu deepCopyIzinDurumu = new İzinDurumu(this.gidilecekYol, kisi.isim, kisi.soyisim);
+            return deepCopyIzinDurumu;
+        }
+    }
+-----
+
+<1> Mesaj vereceğimiz sınıfı oluşturduk.
+
+<2> Kisi sınıfını tanımlıyoruz, altta custom olarak yarattık.
+
+<3> Constructor yapımızı oluşturduk.
+
+<4> Shallowcopy metodumuzu oluşturduk.
+
+<5> Deepcopy Metodumuzu oluşturduk.
+
+Bu sınıfta mesajımızın değerlerini ve fonksiyonlarını tanımladık. Custom yaratılan sınıf ve copy metotları prototype örüntüsü için kullanıldı.
+
+Örnek için açıklamak gerekirse: Şehirdışına çıkmak => İletilmek istenen mesaj. Bunun için gerekli olan stateleri ve metotlar tanımlandı.
+
+===== Kisi Sınıfı
+
+[source,c#]
+-----
+    class Kisi <1>
+    {
+        public string isim;
+        public string soyisim;
+        public Kisi(string isim, string soyisim)
+        {
+            this.isim = isim;
+            this.soyisim = soyisim;
+        }
+    }
+-----
+
+Bu sınıf ise, deepcopy metodu ve shallowcopy metotlarını uygulamak için yazıldı. Shallowcopy ile kopyalanan nesnenin, normal attributelarında değişiklik yapıldığında (*İzindurumu classının stateleri*), önceki referans aldığı obje etkilenmez iken, deep atributelarında (*Kisi sınıfının stateleri*) herhangi bir değişiklik yapıldığında referans aldığı objenin değerleri de etkileniyor. Deepcopy ile kopyalandığında böyle bir sorun olmuyor.
+
+===== İzinDegerlendir Soyut Sınıfı
+
+[source,c#]
+-----
+    abstract class İzinDegerlendir <1>
+    {
+        //Handler sınıfımız, mesajı ele alır, soyut.
+        İzinDegerlendir successor; <2>
+
+        //Soyut metot, bütün miras alanlar kendi kriterlerine göre izin durumunu değerlendirecek.
+        public abstract void talepDegerlendir(İzinDurumu izinDurumu); <3>
+
+        //Zincirdeki halkaları belirliyor
+        public void ustOrganizasyonaGit(İzinDegerlendir successor) <4>
+        {
+            this.successor = successor;
+        }
+        
+        //Eğer zincirdeki halka boş değilse bir sonraki kurumun degerlendir metoduna git. <5>
+        public void next(İzinDurumu izinDurumu)
+        {
+            if (this.successor != null)
+            {
+                this.successor.talepDegerlendir(izinDurumu);
+            }
+            else
+            {
+                Console.WriteLine("İzin alamadınız, kriterleriniz uymuyor!");
+            }
+        }
+    }
+-----
+<1> Handler sınıfımız, mesajı ele alıyor, soyut yapıda.
+
+<2> Zincir yapısının oluşmasını sağlayan değişken. Kendi sınıfından türediği için *composition* şeklinde bağlanıyor. Kendinden sonra mesajı değerlendirecek olan sınıfı tutuyor.
+
+<3> Bu sınıftan miras alan sınıflar(Aile, Kaymakam, Vali) bu metodu kendi kriterlerince göre mesaj ile beraber yorumlayacaklardır.
+
+<4> Main sınıfından sırasıyla çağrılmış olan bu metot sayesinde, Aile sınıfı kendinden bir sonraki geleni successor degiskeninde tutmus oldu.
+
+<5> Mesajı kendi kriterlerince değerlendiren ve bu mesaja göre onay veremeyen class, next metoduyla kendinden bir sonraki onaylama ihtimali olan classın talepdeğerlendir metoduna yolluyor.
+
+===== Aile Sınıfı
+
+[source,c#]
+-----
+    class Aile : İzinDegerlendir <1>
+    {
+        public override void talepDegerlendir(İzinDurumu izinDurumu) 
+        {
+            //Kendine özgü bir kriter belirledik, farklılık olsun diye sadece.
+            //Aile eğer şüpheli korona sayisi bugün 50' den düşükse izin verebiliyor, yoksa kaymakamdan izin almasını söylüyor
+            int şüpheliKoronaliSayi = 50; <2>
+
+            if (izinDurumu.gidilecekYol < 20 && şüpheliKoronaliSayi < 75) <3>
+            {
+                Console.WriteLine("Sayın " + izinDurumu.kisi.isim + " "+ izinDurumu.kisi.soyisim + " - İzin talebi aileniz tarafindan onaylandi");
+            } else <4>
+            {
+                this.next(izinDurumu);
+            }
+        }
+ 
+    }
+-----
+<1> Concrete handler sınıfımız. İzin mesajını ilk değerlendirecek olan sınıf. Üst taraftaki soyut sınıfı miras almış.
+
+<2> Kendine özgü temsili olması açısından bir parametre ekledik.
+
+<3> Aile eğer o gün koronasayisi 75' in altıysa (kendine özgü kriter), ve gidilecek yolun kilometresi 20 nin altında ise izin veriyor.
+
+<4> Koşullar yerine getirmiyorsa, soyut sınıftaki next metoduyla bir sonraki concrete handler sınıfının (Kaymakam) talep değerlendirme metoduna gönderiyor.
+
+
+===== Kaymakam Sınıfı
+
+[source,c#]
+-----
+    class Kaymakam : İzinDegerlendir 
+    {
+        public override void talepDegerlendir(İzinDurumu izinDurumu)
+        {
+            int bugünİzinVerilenKisiSayisi = 10; <2>
+            if (izinDurumu.gidilecekYol < 120 && bugünİzinVerilenKisiSayisi < 15) <3>
+            {
+                Console.WriteLine("Sayın " + izinDurumu.kisi.isim + " " + izinDurumu.kisi.soyisim + " - İzin talebi kaymakam tarafindan onaylandi");
+            }
+            else <4>
+            {
+                this.next(izinDurumu);
+            }
+        }
+
+    }
+-----
+<1> Concrete handler sınıfımız. İzin mesajını ikinci değerlendirecek olan sınıf.
+
+<2> Kendine özgü temsili olması açısından bir parametre ekledik.
+
+<3> Kaymakam eğer o gün başka izin verdiği kişi sayısı 15'in altındaysa (kendine özgü kriter), ve gidilecek yolun kilometresi 120 nin altında ise izin veriyor.
+
+<4> Koşullar yerine getirmiyorsa, soyut sınıftaki next metoduyla bir sonraki concrete handler sınıfının (Vali) talep değerlendirme metoduna gönderiyor.
+
+===== Vali Sınıfı
+
+[source,c#]
+-----
+    class Vali : İzinDegerlendir <1>
+    {
+
+        public override void talepDegerlendir(İzinDurumu izinDurumu)
+        {
+            if (izinDurumu.gidilecekYol < 400) <2>
+            {
+                Console.WriteLine("Sayın " + izinDurumu.kisi.isim + " " + izinDurumu.kisi.soyisim + " - İzin talebi vali tarafindan onaylandi");
+            }
+            else <3>
+            {
+                this.next(izinDurumu);
+            }
+        }
+    }
+-----
+<1> Concrete handler sınıfımız. İzin mesajını son değerlendirecek olan sınıf.
+
+<2> Vali sadece kilometre kontrolü yapıyor.
+
+<3> Koşul uymuyorsa, bundan sonra baska bir concrete handler sınıfı olmadığı için soyut sınava gidecek, fakat oradaki successor değişkeni boş olduğundan, bu mesaja uygun onaylamanın olmadığını söyleyecek.
+
+===== Program Sınıfı
+
+[source,c#]
+-----
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //Concrete Handlerlarımızı tanımladık. <1>
+            Aile aile = new Aile(); 
+            Kaymakam kaymakam = new Kaymakam();
+            Vali vali = new Vali();
+
+            //Mesaja göre nesne sıralaması yaptık. <2>
+            aile.ustOrganizasyonaGit(kaymakam);
+            kaymakam.ustOrganizasyonaGit(vali);
+
+            //Mesajlarımızı oluşturduk ve girilen km sayisini verdik, bir tanesini shallowcopy ile kopyaladık. <3>
+            İzinDurumu izinDurumu = new İzinDurumu(100, "Batuhan", "Subasi");
+            İzinDurumu yeniIzinDurumu = (İzinDurumu)izinDurumu.ShallowCopy();
+
+            Console.WriteLine("İzin Durumları - Shallow Copy Öncesi");
+            //Mesajlarımızı halkanın ilk zincirine gönderdik. <4>
+            aile.talepDegerlendir(izinDurumu);
+            aile.talepDegerlendir(yeniIzinDurumu);
+
+            Console.WriteLine("\nİzin Durumları - Shallow Copy Sonrasi");
+            yeniIzinDurumu.gidilecekYol = 10; <5>
+            yeniIzinDurumu.kisi.isim = "Aslihan";
+            aile.talepDegerlendir(izinDurumu);
+            aile.talepDegerlendir(yeniIzinDurumu);
+
+            Console.WriteLine("\n\n");
+
+            //Mesajlarımızı oluşturduk ve girilen km sayisini verdik, bir tanesini deepcpoy ile kopyaladık. <6>
+            İzinDurumu izinDurumuCopy = new İzinDurumu(100, "Batuhan", "Subasi");
+            İzinDurumu yeniIzinDurumuCopy = (İzinDurumu)izinDurumuCopy.DeepCopy();
+
+            Console.WriteLine("İzin Durumları - Deep Copy Öncesi");
+            //Mesajlarımızı halkanın ilk zincirine gönderdik.
+            aile.talepDegerlendir(izinDurumuCopy);
+            aile.talepDegerlendir(yeniIzinDurumuCopy);
+
+            Console.WriteLine("\nİzin Durumları - Deep Copy Sonrasi"); <7>
+            yeniIzinDurumuCopy.gidilecekYol = 10;
+            yeniIzinDurumuCopy.kisi.isim = "Aslihan";
+            aile.talepDegerlendir(izinDurumuCopy);
+            aile.talepDegerlendir(yeniIzinDurumuCopy);
+        }
+    }
+-----
+<1> Concrete Handlerlarımızı tanımladık.
+
+<2> Mesaja göre nesne sıralaması yaptık.
+
+<3> Mesajlarımızı oluşturduk ve girilen km sayisini verdik, bir tanesini shallowcopy ile kopyaladık.
+
+<4> Mesajlarımızı halkanın ilk zincirine gönderdik.
+
+<5> Yeni mesajımızın yolunu *100* km' den *10* km' ye düşürdük. Mesaj talebindeki bulunan kişinin ismini *Batuhan*' dan *Aslıhan* yaptık. Sonrasında bu yeni mesajı ve eski mesajımızı yazdırdığımızda eski mesajın km bilgisini halen koruduğunu *10* fakat isim bilgisini maalesef korumadığını gördük. Çıktıda *Aslıhan* olarak gördük, *Batuhan* olarak görmemiz gerekirdi. Programın çıktısını aşağıda paylaşacağım, tıklayarak da gidilebilir =>  <<Chain of Responsibility Çıktı Görüntüsü>>
+
+<6> Mesajlarımızı oluşturduk ve girilen km sayisini verdik, bir tanesini deepcopy ile kopyaladık.
+
+<7> 5.numaralı kod açıklaması ile birebir aynı varyasyon deneniyor, bu sefer ilk mesajımızın isim bilgisi değişmemiş oluyor. Çıktı da görüntülenebilir => <<Chain of Responsibility Çıktı Görüntüsü>>
+
+- - -
+
+=== Chain of Responsibility Çıktı Görüntüsü
+
+
+image::Output.PNG[]
+
+- - -
+
+=== GENEL SONUÇ
+
+* *ChainofResponsibility* örüntüsünü bu örneğimde neden kullandığıma gelirsek, mesaj olarak il dışı seyahat edilmek isteniyor. Günümüzde, bu dönemde yaşamış olduğumuz bir olay. Bu mesajı gerçekleştirmek için ilgili makamlara (concrete classlarımıza) sırayla gidiyoruz. Eğer bu yapı if/else kod blokları içerisinde olsaydı, iki gün sonra il dışına çıkmak için yeni eklenen makamları esnek bir şekilde ekleyemeyecektir ve if/else yapısında değişiklik yapılmak istenildiğinde kontrol/onay yapısı bozulabilirdi. Bu yapı sayesinde sırayla; ailenin kaymakamdan, kaymakamın validen haberi olmadan herkes kendi içerisinde gerekli kontrollerini yapıyor. Herhangi bir değişiklik yapılmak istenirse class yapısında yapılıyor, halkaya ekleniyor.
+
+* *Prototype* örüntüsünü kullanma sebebim ise, izin alma mesajı aynı aile için gönderilebilir. Aynı ailenin gideceği uzaklık yüksek ihtimal aynı olacaktır ve mesajda sadece kisi bilgisi farklı olacaktır. Birden fazla nesne tek tek oluşturulmak yerine deepcopy ve shallowcopy yöntemiyle birinden referans alanarak kopyalanacaktır. Sadece isim bilgisi değiştirilmek istenecektir. Böyle bir durumda shallowcopy kullanıldığında önceki nesnenin isim bilgisi kaybolmuş olacaktır. Deepcopy ile bunun önüne geçmiş olduk ve izin için başarılı şekilde kopyalama gerçekleştirildi.
+

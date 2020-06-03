@@ -1,0 +1,47 @@
+.SingleResponsibility Princible
+[uml,file="SingleResponsibility.png"]
+--
+@startuml
+
+title SingleResponsibility Principle UML Diyagramı
+
+class BasariliMesajlar {
++BaslangicMesajı():void
++BitisMesajı():void
+}
+
+class Fatura {
++int gonderenVKN
++int aliciTCKN
++double tutar
+}
+
+class FaturaBitir {
++FaturaYarat(Fatura fatura)
+}
+
+class FaturaVerileri {
++KullanıcıdanAl(): Fatura
++VeritabanındanCek(): Fatura
+}
+
+class HataliMesajlar {
++BaslangicMesajı(int VKN):void
++BitisMesajı(int TCKN):void
+}
+
+class Program {
++Main:void
+}
+
+BasariliMesajlar <-- "kullanır" Program
+HataliMesajlar <-- "kullanır" Program
+Fatura <-- "kullanır" Program
+FaturaVerileri <-- "kullanır" Program
+FaturaBitir <-- "kullanır" Program
+Fatura <-- "kullanır" FaturaVerileri
+Fatura <-- "kullanır" FaturaBitir
+
+
+@enduml
+--

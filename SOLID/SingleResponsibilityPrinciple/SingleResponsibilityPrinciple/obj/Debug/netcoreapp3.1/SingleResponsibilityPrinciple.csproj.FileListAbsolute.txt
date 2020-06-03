@@ -1,0 +1,11 @@
+C:\Users\bsubasi\source\repos\SingleResponsibilityPrinciple\SingleResponsibilityPrinciple\bin\Debug\netcoreapp3.1\SingleResponsibilityPrinciple.exe
+C:\Users\bsubasi\source\repos\SingleResponsibilityPrinciple\SingleResponsibilityPrinciple\bin\Debug\netcoreapp3.1\SingleResponsibilityPrinciple.deps.json
+C:\Users\bsubasi\source\repos\SingleResponsibilityPrinciple\SingleResponsibilityPrinciple\bin\Debug\netcoreapp3.1\SingleResponsibilityPrinciple.runtimeconfig.json
+C:\Users\bsubasi\source\repos\SingleResponsibilityPrinciple\SingleResponsibilityPrinciple\bin\Debug\netcoreapp3.1\SingleResponsibilityPrinciple.runtimeconfig.dev.json
+C:\Users\bsubasi\source\repos\SingleResponsibilityPrinciple\SingleResponsibilityPrinciple\bin\Debug\netcoreapp3.1\SingleResponsibilityPrinciple.dll
+C:\Users\bsubasi\source\repos\SingleResponsibilityPrinciple\SingleResponsibilityPrinciple\bin\Debug\netcoreapp3.1\SingleResponsibilityPrinciple.pdb
+C:\Users\bsubasi\source\repos\SingleResponsibilityPrinciple\SingleResponsibilityPrinciple\obj\Debug\netcoreapp3.1\SingleResponsibilityPrinciple.csprojAssemblyReference.cache
+C:\Users\bsubasi\source\repos\SingleResponsibilityPrinciple\SingleResponsibilityPrinciple\obj\Debug\netcoreapp3.1\SingleResponsibilityPrinciple.AssemblyInfoInputs.cache
+C:\Users\bsubasi\source\repos\SingleResponsibilityPrinciple\SingleResponsibilityPrinciple\obj\Debug\netcoreapp3.1\SingleResponsibilityPrinciple.AssemblyInfo.cs
+C:\Users\bsubasi\source\repos\SingleResponsibilityPrinciple\SingleResponsibilityPrinciple\obj\Debug\netcoreapp3.1\SingleResponsibilityPrinciple.dll
+C:\Users\bsubasi\source\repos\SingleResponsibilityPrinciple\SingleResponsibilityPrinciple\obj\Debug\netcoreapp3.1\SingleResponsibilityPrinciple.pdb

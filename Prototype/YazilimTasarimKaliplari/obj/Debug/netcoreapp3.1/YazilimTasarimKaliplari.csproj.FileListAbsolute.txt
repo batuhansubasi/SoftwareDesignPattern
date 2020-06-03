@@ -9,3 +9,14 @@ C:\Users\bsubasi\source\repos\YazilimTasarimKaliplari\YazilimTasarimKaliplari\ob
 C:\Users\bsubasi\source\repos\YazilimTasarimKaliplari\YazilimTasarimKaliplari\obj\Debug\netcoreapp3.1\YazilimTasarimKaliplari.AssemblyInfo.cs
 C:\Users\bsubasi\source\repos\YazilimTasarimKaliplari\YazilimTasarimKaliplari\obj\Debug\netcoreapp3.1\YazilimTasarimKaliplari.dll
 C:\Users\bsubasi\source\repos\YazilimTasarimKaliplari\YazilimTasarimKaliplari\obj\Debug\netcoreapp3.1\YazilimTasarimKaliplari.pdb
+C:\Users\bsubasi\Documents\GitHub\SoftwareDesignPattern\Prototype\YazilimTasarimKaliplari\bin\Debug\netcoreapp3.1\YazilimTasarimKaliplari.exe
+C:\Users\bsubasi\Documents\GitHub\SoftwareDesignPattern\Prototype\YazilimTasarimKaliplari\bin\Debug\netcoreapp3.1\YazilimTasarimKaliplari.deps.json
+C:\Users\bsubasi\Documents\GitHub\SoftwareDesignPattern\Prototype\YazilimTasarimKaliplari\bin\Debug\netcoreapp3.1\YazilimTasarimKaliplari.runtimeconfig.json
+C:\Users\bsubasi\Documents\GitHub\SoftwareDesignPattern\Prototype\YazilimTasarimKaliplari\bin\Debug\netcoreapp3.1\YazilimTasarimKaliplari.runtimeconfig.dev.json
+C:\Users\bsubasi\Documents\GitHub\SoftwareDesignPattern\Prototype\YazilimTasarimKaliplari\bin\Debug\netcoreapp3.1\YazilimTasarimKaliplari.dll
+C:\Users\bsubasi\Documents\GitHub\SoftwareDesignPattern\Prototype\YazilimTasarimKaliplari\bin\Debug\netcoreapp3.1\YazilimTasarimKaliplari.pdb
+C:\Users\bsubasi\Documents\GitHub\SoftwareDesignPattern\Prototype\YazilimTasarimKaliplari\obj\Debug\netcoreapp3.1\YazilimTasarimKaliplari.csprojAssemblyReference.cache
+C:\Users\bsubasi\Documents\GitHub\SoftwareDesignPattern\Prototype\YazilimTasarimKaliplari\obj\Debug\netcoreapp3.1\YazilimTasarimKaliplari.AssemblyInfoInputs.cache
+C:\Users\bsubasi\Documents\GitHub\SoftwareDesignPattern\Prototype\YazilimTasarimKaliplari\obj\Debug\netcoreapp3.1\YazilimTasarimKaliplari.AssemblyInfo.cs
+C:\Users\bsubasi\Documents\GitHub\SoftwareDesignPattern\Prototype\YazilimTasarimKaliplari\obj\Debug\netcoreapp3.1\YazilimTasarimKaliplari.dll
+C:\Users\bsubasi\Documents\GitHub\SoftwareDesignPattern\Prototype\YazilimTasarimKaliplari\obj\Debug\netcoreapp3.1\YazilimTasarimKaliplari.pdb

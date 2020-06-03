@@ -1,0 +1,256 @@
+== Decorator Tasarım Kalıbı
+
+*Batuhan Subaşı - 160202091*
+
+- - -
+
+=== Decorator
+
+Nesneye yeni özellik kazandırmak amacıyla herhangi bir miras yöntemi uygulamadan işlevsellik eklemektedir. Oluşturulan yeni nesne, önceki nesnenin özelliklerini almış olur ve kullanmaya devam eder. 
+
+* Sınıf tabanlı yapıya programın çalışma zamanında herhangi bir ekleme yapılamadığından dolayı, rapor çalıştırıldığında ilgili nesneye atasından bağımsız şekilde yeni özellik eklenebilir.
+
+
+- - -
+
+=== Decorator Avantajları
+
+* Yapıya yeni bir metodu dinamik olarak eklemeyi sağlar.
+
+* Sınıf yapısı bozulmadan nesneye yeni bir özellik kazandırılabilir, kalıtım ile önceki durumda korunur.
+
+* Esnek bir yöntem, spesifik nesneye yapılabiliyor.
+
+* Dekorasyon yapmak istenen nesnelerde *sarmalamayı* sağlıyor.
+
+* Yapıların birbirine gevşek bağlı olacak şekilde olmasına olanak sağlar.
+
+- - -
+
+=== Decorator Yapısı
+
+* *IComponent:* Hem decorator sınıfını hem de component sınıfının atası, arayüz. 
+
+* *Component:* Halihazırda kullanılan sınıf, decorator ile yeni özellik edinen nesnenin önceki ve halen kullanabildiği özelliklerin olduğu sınıf.
+
+* *Decorator:* İçerisinde değişiklik yapılan, özelliğin eklenmesinin gerçekleştirildiği sınıf.
+
+* *Client:* Component ve somut decorator sınıflarının oluşturulduğu, atasından ve sonradan gelen metotların/özelliklerin kullanıldığı sınıf.
+
+- - -
+
+=== Decorator için Gerekli Olanlar
+
+* Soyut decorator, soyuttan gerçekleştirilen somut decorator ve özellik yansıtılan component, component ve soyut decorator' ın atası interface ile bağlanabilir.
+
+- - -
+
+=== Decorator Örnek Kaynak Kodları
+
+* Bu çalışmada yapıyı güçlendirmek adına önceki konulardan Thread Safe Singleton Pattern'i eklendi.
+
+===== IKoronaOnlemler Arayüzü
+
+[source,c#]
+-----
+    public interface IKoronaOnlemler <1>
+    {
+        void maskeTak();
+        bool sosyalMesafeKoru(double uzaklik);
+    }
+-----
+
+<1>  IKoronaOnlemler adında arayüzü oluşturduk.
+
+KoronaOnlemler isimli component ile DecoratorKoronaOnlemler isimli soyut decarotor nesnelerinin miras alacağı metotları yazdık. Bütün nesneler kalıcı olarak bu özellikleri kullanacaktır.
+
+
+===== KoronaOnlemler Sınıfı
+
+
+
+[source,c#]
+-----
+public class KoronaOnlemler : IKoronaOnlemler <1>
+    {
+        //instance
+        private static KoronaOnlemler koronaOnlemler = null; <2>
+        private static readonly object padlock = new object(); <3>
+
+        private KoronaOnlemler() <4>
+        {
+            Console.WriteLine("Sadece bir kez korona önlem sınıfından nesne oluşturulmasına izin verdik\n");
+        }
+
+        public static KoronaOnlemler getKoronaOnlemler <5>
+        {
+            get
+            {
+                lock (padlock)
+                {
+                    if (koronaOnlemler == null)
+                    {
+                        koronaOnlemler = new KoronaOnlemler();
+                    }
+                    return koronaOnlemler;
+                }
+            }
+        }
+
+        public void maskeTak() <6>
+        {
+            Console.WriteLine("Tam korumalı maske takildi.");
+        }
+
+        public bool sosyalMesafeKoru(double uzaklik) <6>
+        {
+            if (uzaklik > 2)
+            {
+                return true;
+            }
+            else return false;
+        }
+    }
+-----
+
+<1> Koronaonlemler ismindeki component sınıfı olusturuldu.
+
+<2> Instance olusturuldu. Kendi sınıfından türetiği için *agregation* ilişkisi kurulmus oldu. Instance, bu sınıftan ilk nesne türetildiğinde *null* değeri değişecek olup, bu sınıftan türeyen nesne rolüne bürünecektir. Bu sayede tek seferlik yapılmak istenen iş (bu örnekte: Korona önlemleri günlük olarak belirleniyor, bunun sadece günde sadece tek 1 sefer çalışmasını istiyoruz.) sadece constructor nesnesine 1 kere girerek yapılandırılmış olacaktır.
+
+<3> C# hazır obje sınıfından, daha önce nesnenin üretilip üretilmediğini kontrol ettiğimiz state.
+
+<4> Main classımızdan birden fazla üretilmiş olan bu sınıf nesnelerinin yapıcıya kaç kere girdiğini görmek için print fonksiyonu yazıldı. (Mainden ne oluşursa oluşsun, constructordaki yazdırmayı 1 kere yapıyor.)
+
+<5> Main classımızdan direkt olarak nesne oluşturmak yerine, bu metotla eğer daha önce obje oluşturulduysa o döndürülüyor, eğer daha önce oluşturulmadıysa (instance boşsa) nesne oluşturulup o geri döndürülüyor.
+
+<6> Bütün korona önlemlerinde olması gereken standart metotlarımızı tanımladık.
+
+Mainde, klasik componentimiz üstüne decorator ile yeni özellik ekleyeceğiz. Bu componentin metotlarını da hali hazirda kullanabilmiş olacağız. Normalde direkt olarak burada değişiklik sağlayabilirdik fakat yapımızı bozmak istemiyoruz. Bu örnektekinden daha karmaşık yapıda olan sınıflarda, ana işlevlerin kullanılmasını ve yapının korunması gerektiği için, decorator ile sonradan eklenmek istenen özellik buradan bağımsız şekilde yapılabiliyor. 
+
+===== DecoratorKoronaOnlemler Soyut Sınıfı
+
+[source,c#]
+-----
+    public abstract class DecoratorKoronaOnlemler : IKoronaOnlemler <1>
+    {
+        private IKoronaOnlemler iKoronaOnlemler; <2>
+
+        public DecoratorKoronaOnlemler(IKoronaOnlemler iKoronaOnlemler) <2>
+        {
+            this.iKoronaOnlemler = iKoronaOnlemler;
+        }
+
+        public void maskeTak() <3>
+        {
+            iKoronaOnlemler.maskeTak();
+        }
+
+        public bool sosyalMesafeKoru(double uzaklik) <3>
+        {
+            if (iKoronaOnlemler.sosyalMesafeKoru(uzaklik))
+                return true;
+            else return false;
+        }
+    }
+-----
+<1> Soyut decorator sınıfı olusturuldu.
+
+<2> Sınıf içerisinde arayüzün tipinde state tanımlandığı için *agregation* ilişkisi kurulmuş oldu. Component sınıfındaki obje (Ekstra özellik eklenilmek istenmeyen) bu değişkene atanacak ve bu sayede hali hazırdaki özelliklerini kullanabilecek.
+
+<3> Component metotları tekrar yazıldı fakat içerikleri eski şekilde doldurulmaya devam edildi. Bu sayede nesne, yeni özelliklerini edinirken eski özelliklerini kaybetmemis oldu.
+
+Soyut decorator nesnesi, bundan sonraki geliştirme/değişiklik isteklerinde sabit bir yapıda kalabilecek, gelen istekler somut olan decorator nesnesinde kendi içinde halledilebilecektir.
+
+
+===== KoronaYeniOnlem Sınıfı
+
+[source,c#]
+-----
+    class KoronaYeniOnlem : DecoratorKoronaOnlemler <1>
+    {
+        public KoronaYeniOnlem(IKoronaOnlemler iKoronaOnlemler) : <2> base(iKoronaOnlemler) //base ile taban sınıfın üyelerine erişmek için kullanılır
+        {
+        }
+        //Sonradan eklenilen metot, özellik
+        public void sokagaCikma(int gün) <3>
+        {
+            //Eğer haftasonu ise
+            if(gün == 6 || gün == 7)
+            {
+                Console.WriteLine("Bugün haftasonu, dışarı çıkmayın!");
+            } else
+            {
+                Console.WriteLine("Haftaici, dısarı cikabilirsiniz!");
+            }
+        }
+    }
+-----
+<1> KoronaYeniOnlem adında somut decorator nesnesi oluşturuldu.
+
+<2> Yapıcı ile mainden oluşturulan yeni korona önlemler nesnemiz, önceki önlemleri de kapsayacak şekilde yapıcısında belirtildi, *base* metoduyla taban sınıfın üyelerine erişilmiş oldu. Burada *dependecy inversion* kullanılmış olabilir.
+
+<3> Sonradan eklenmek istenen işlev/metot. Burada opsiyon olarak özellik kazandırmış oluyoruz. Ben bu örnekte, ülkemize sonradan eklenen önlemlerden sokağa çıkma yasağını ele aldım.
+
+
+===== Program Sınıfı
+
+[source,c#]
+-----
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //Component <1>
+            KoronaOnlemler koronaOnlemler = KoronaOnlemler.getKoronaOnlemler;
+            
+            //Somut decorator nesnesi olusturduk, componenti içeri verdik. <2>
+            KoronaYeniOnlem koronaYeniOnlemler = new KoronaYeniOnlem(koronaOnlemler);
+
+            //Default gelen metotlar, classın kendisinde olanlar <3>
+            koronaYeniOnlemler.maskeTak();
+            bool uzaklikKontrol = koronaYeniOnlemler.sosyalMesafeKoru(6);
+            if (uzaklikKontrol)            
+                Console.WriteLine("Sosyal mesafeyi korudugunuz icin tesekkurler");    
+            else
+                Console.WriteLine("Sosyal mesafe kuralına uymadınız !!!");
+            
+            //Sonradan eklenilen metot <4>
+            //Classa sokagaCikma metodu eklemeden, nesneye metot kazandırdık. <4>
+            koronaYeniOnlemler.sokagaCikma(6); //Haftasonu: 6,7
+
+            Console.WriteLine("\n"); 
+            <5>
+            KoronaOnlemler koronaOnlemlerv2 = KoronaOnlemler.getKoronaOnlemler;
+            KoronaYeniOnlem koronaYeniOnlemlerv2 = new KoronaYeniOnlem(koronaOnlemlerv2);
+            koronaYeniOnlemlerv2.maskeTak();
+            if (koronaYeniOnlemlerv2.sosyalMesafeKoru(2.5)) Console.WriteLine("Sosyal mesafeyi korudugunuz icin tesekkurler");
+            koronaYeniOnlemlerv2.sokagaCikma(5); //Haftasonu: 6,7
+
+        }
+    }
+-----
+<1> Component, hali hazırda kullandığımız, değişiklik yapmak istemediğimiz nesneyi oluşturuyoruz.
+
+<2> Somut decorator nesnesi olusturduk, componenti içeri verdik.
+
+<3> Default gelen metotlar, component sınıfı içerisinde olanları çağırdık.
+
+<4> Sonradan eklenilen metot, decorator sayesinde. Sınıfa sokagaCikma metodu eklemeden, nesneye metot kazandırdık.
+
+<5> Bundan sonraki işlemler *Thread Safe* için yapılmıştır. Yapıcıya sadece 1 kez girdiği analiz edilmiştir. Çıktı üzerinden kontrol sağlanabilir => <<Decorator Çıktı Görüntüsü>>
+
+- - -
+
+=== Decorator Çıktı Görüntüsü
+
+
+image::Output.PNG[]
+
+- - -
+
+=== GENEL SONUÇ
+
+* *Decorator* örüntüsünü kullanma sebebim, Türkiyede korona önlemleri için 2 tane sabit, değişmeyen 2 özellik gördüm. Maske takma ve sosyal mesafeyi koruma hiçbir zaman değişmeyen önlem. Sonrasında gelen önlem ise sokağa çıkma yasağıydı. Hali hazırdaki component sınıfımın yapısını bozmadan decorator nesnesi sayesinde önceki maske takma, sosyal mesafeyi koru metotlarımızı da kullanarak yeni özelliğimizi oluşturmuş olduk. Böylece bundan sonra gelecek/gelebilecek önlemler, soyut decoratordan miras alacak şekilde somut bir yeni decorator nesnesi oluşturularak önlem tanımlanabilir. Böylece değişiklik/geliştirme isteklerine kolay bir şekilde cevap verilebilir.
+
+* *Thread Safe* örüntüsünü kullanma sebebim ise, sabit olan Korona Önlemler temel componentimizin sadece 1  kere oluşturulması bu senaryo için yetiyor. Yeni eklenmek istenen somut decoratorlar, refere olarak bu nesneyi kullanabilir fakat birden fazla üretilmemesi amacıyla böyle bir kontrol konularak kaynak tasarrufu yapılmaya çalışılmıştır.
+
